@@ -318,40 +318,15 @@ android {
             }
 
             dimension "store"
-<<<<<<< HEAD
-<<<<<<< HEAD
-            versionName "1.6.20.sc80"
-=======
-<<<<<<< HEAD
-            versionName "1.6.18.sc79"
-=======
-            versionName "1.6.8.kb74"
->>>>>>> da7b9584d7 (Kebabchat)
->>>>>>> a1259b94fe (Kebabchat)
-=======
-            versionName "1.6.18.kb79"
+            versionName "1.6.20.kb80"
 
->>>>>>> 9f3fbd52c3 (fix for merge sc code to kc)
             buildConfigField "String", "SHORT_FLAVOR_DESCRIPTION", "\"G\""
             buildConfigField "String", "FLAVOR_DESCRIPTION", "\"GooglePlay\""
         }
 
         fdroid {
             dimension "store"
-<<<<<<< HEAD
-<<<<<<< HEAD
-            versionName "1.6.20.sc80"
-=======
-<<<<<<< HEAD
-            versionName "1.6.18.sc79"
-=======
-            versionName "1.6.8.kb74"
->>>>>>> da7b9584d7 (Kebabchat)
->>>>>>> a1259b94fe (Kebabchat)
-=======
-            versionName "1.6.18.kb79"
-
->>>>>>> 9f3fbd52c3 (fix for merge sc code to kc)
+            versionName "1.6.20.kb80"
             buildConfigField "String", "SHORT_FLAVOR_DESCRIPTION", "\"F\""
             buildConfigField "String", "FLAVOR_DESCRIPTION", "\"FDroid\""
             isDefault = true
