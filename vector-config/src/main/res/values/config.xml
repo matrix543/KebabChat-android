@@ -19,10 +19,14 @@
 
     <!-- Note: pusher_http_url should have path '/_matrix/push/v1/notify' -->
     <!-- It is the push gateway for FCM embedded distributor -->
+    <!--<string name="pusher_http_url" translatable="false">https://sygnal.schildi.chat/_matrix/push/v1/notify</string> -->
     <string name="pusher_http_url" translatable="false">https://gnukebab.com/_matrix/push/v1/notify</string>
+
     <!-- Note: default_push_gateway_http_url should have path '/_matrix/push/v1/notify' -->
     <!-- It is the push gateway for UnifiedPush -->
-    <string name="default_push_gateway_http_url" translatable="false">https://up.schildi.chat/_matrix/push/v1/notify</string>
+    <!--<string name="default_push_gateway_http_url" translatable="false">https://up.schildi.chat/_matrix/push/v1/notify</string> -->
+    <string name="default_push_gateway_http_url" translatable="false">https://gnukebab.com/_matrix/push/v1/notify</string>
+
     <!-- Note: pusher_app_id cannot exceed 64 chars -->
     <string name="pusher_app_id" translatable="false">de.spiritcroc.riotx</string>
 
@@ -33,7 +37,7 @@
         <item>matrix.org</item>
         <item>gitter.im</item>
         <item>schildi.chat</item>
-        <item>kebabchat.com</item>
+        <item>gnukebab.com</item>
     </string-array>
 
     <!-- Permalink config -->
