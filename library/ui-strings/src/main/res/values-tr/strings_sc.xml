@@ -45,9 +45,9 @@
     <string name="labs_mark_rooms_unread">Sohbetleri okunmamış olarak işaretle</string>
     <string name="url_previews_in_encrypted_rooms">Şifreli sohbetlerde URL önizlemeleri</string>
     <string name="url_previews_in_encrypted_rooms_summary">Böylece mesajlarınızdaki URL\'ler ana sunucunuza sızacaktır!</string>
-    <string name="login_mobile_device_sc">SchildiChat Android</string>
+    <string name="login_mobile_device_sc">KebabChat Android</string>
     <string name="bottom_action_all">Genel bakış</string>
-    <string name="all_list_rooms_empty_title">SchildiChat</string>
+    <string name="all_list_rooms_empty_title">KebabChat</string>
     <string name="all_list_rooms_empty_body">Sohbetler burada gösterilecek</string>
     <string name="login_connect_using_matrix_id_text_sc">ör. @kullanıcı:alan.com</string>
     <string name="login_server_other_title_sc">Özel sunucu</string>
@@ -105,7 +105,7 @@
     <string name="settings_hide_call_buttons">Arama düğmelerini gizle</string>
     <string name="settings_hide_call_buttons_summary">Sesli veya görüntülü arama başlatmak için oda araç çubuğundaki düğmeleri gizler</string>
     <string name="room_settings_default">Varsayılan</string>
-    <string name="settings_sc_debugging">Schildi-Hata ayıklama</string>
+    <string name="settings_sc_debugging">Kebab-Hata ayıklama</string>
     <string name="settings_sc_debugging_summary">Ek günlükleri veya hata ayıklama özelliklerini etkinleştirir</string>
     <string name="settings_sc_dbg_read_marker">Okuma işareti hata ayıklama</string>
     <string name="settings_sc_dbg_timeline_chunks">Zaman çizelgesi tutarlılığı hata ayıklama</string>

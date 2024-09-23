@@ -47,28 +47,28 @@ class LoginServerSelectionFragment :
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        initTextViews()
+        //initTextViews()
     }
 
     private fun initViews() {
-        views.loginServerChoiceEmsLearnMore.debouncedClicks { learnMore() }
+        //views.loginServerChoiceEmsLearnMore.debouncedClicks { learnMore() }
         views.loginServerChoiceMatrixOrg.debouncedClicks { selectMatrixOrg() }
         views.loginServerChoiceMatrixOrg.isVisible = !buildMeta.isPlayStoreBuild
-        views.loginServerChoiceEms.debouncedClicks { selectEMS() }
+        //views.loginServerChoiceEms.debouncedClicks { selectEMS() }
         views.loginServerChoiceOther.debouncedClicks { selectOther() }
-        views.loginServerIKnowMyIdSubmit.debouncedClicks { loginWithMatrixId() }
+        //views.loginServerIKnowMyIdSubmit.debouncedClicks { loginWithMatrixId() }
     }
 
     private fun updateSelectedChoice(state: LoginViewState) {
         views.loginServerChoiceMatrixOrg.isChecked = state.serverType == ServerType.MatrixOrg
     }
 
-    private fun initTextViews() {
+   /* private fun initTextViews() {
         views.loginServerChoiceEmsLearnMore.text = span {
             text = getString(CommonStrings.login_server_modular_learn_more)
             textDecorationLine = "underline"
         }
-    }
+    } */
 
     private fun learnMore() {
         openUrlInChromeCustomTab(requireActivity(), null, EMS_LINK)

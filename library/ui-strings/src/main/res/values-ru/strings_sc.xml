@@ -18,9 +18,9 @@
     <string name="bubble_style_none">Нет</string>
     <string name="bubble_style_start">На той же стороне</string>
     <string name="bubble_style_both">С обеих сторон</string>
-    <string name="login_mobile_device_sc">SchildiChat Android</string>
+    <string name="login_mobile_device_sc">KebabChat Android</string>
     <string name="bottom_action_all">Обзор</string>
-    <string name="all_list_rooms_empty_title">SchildiChat</string>
+    <string name="all_list_rooms_empty_title">KebabChat</string>
     <string name="all_list_rooms_empty_body">Здесь будут отображаться чаты</string>
     <!-- Login screen -->
     <string name="login_connect_using_matrix_id_text_sc">например @user:domain.com</string>
@@ -138,7 +138,7 @@
     <string name="settings_notif_only_alert_once">Уведомлять только один раз</string>
     <string name="settings_notif_only_alert_once_summary">Пропускать звуки уведомлений для новых сообщений, если есть открытое уведомление для этого чата</string>
     <string name="settings_hide_call_buttons">Скрыть кнопки звонка</string>
-    <string name="settings_sc_debugging">Schildi-отладка</string>
+    <string name="settings_sc_debugging">Kebab-отладка</string>
     <string name="settings_sc_debugging_summary">Включить дополнительный логгинг или возможности отладки</string>
     <string name="dev_tools_menu_new_layout">Новый макет</string>
     <string name="settings_space_back_navigation">Назад к предыдущему пространству</string>

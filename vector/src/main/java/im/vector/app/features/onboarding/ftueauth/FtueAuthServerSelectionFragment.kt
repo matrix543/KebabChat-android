@@ -46,27 +46,27 @@ class FtueAuthServerSelectionFragment :
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        initTextViews()
+       /// initTextViews()
     }
 
     private fun initViews() {
-        views.loginServerChoiceEmsLearnMore.setOnClickListener { learnMore() }
+       // views.loginServerChoiceEmsLearnMore.setOnClickListener { learnMore() }
         views.loginServerChoiceMatrixOrg.setOnClickListener { selectMatrixOrg() }
-        views.loginServerChoiceEms.setOnClickListener { selectEMS() }
+        ///views.loginServerChoiceEms.setOnClickListener { selectEMS() }
         views.loginServerChoiceOther.setOnClickListener { selectOther() }
-        views.loginServerIKnowMyIdSubmit.setOnClickListener { loginWithMatrixId() }
+       /// views.loginServerIKnowMyIdSubmit.setOnClickListener { loginWithMatrixId() }
     }
 
     private fun updateSelectedChoice(state: OnboardingViewState) {
         views.loginServerChoiceMatrixOrg.isChecked = state.serverType == ServerType.MatrixOrg
     }
 
-    private fun initTextViews() {
+    /*private fun initTextViews() {
         views.loginServerChoiceEmsLearnMore.text = span {
             text = getString(CommonStrings.login_server_modular_learn_more)
             textDecorationLine = "underline"
         }
-    }
+    }*/
 
     private fun learnMore() {
         openUrlInChromeCustomTab(requireActivity(), null, EMS_LINK)

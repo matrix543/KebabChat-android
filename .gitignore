@@ -1,3 +1,9 @@
+#ignore keystore file
+vector-app/signature/my-release-key.keystore
+
+#ignore fdroid build apk
+vector-app/fdroid/*
+
 *.iml
 .gradle
 /local.properties
@@ -8,6 +14,8 @@
 .idea/inspectionProfiles
 .idea/sonarlint
 .idea/*.xml
+.idea/shelf/*
+
 .DS_Store
 /build
 /benchmark-out
@@ -36,3 +44,7 @@ Cargo.lock
 
 # For manual dependency to rust crypto sdk
 library/rustCrypto/matrix-rust-sdk-crypto.aar
+
+###ignre build folder with apk and keystore
+vector-app/fdroid/*
+vector-app/signature/my-release-key.keystore

@@ -2159,7 +2159,7 @@ Nākotnē šī pārbaudes procedūra plānota sarežģītāka.</string>
 \n
 \nTas nodrošina viņiem pārliecību, ka viņi tiešām runā ar Tevi, bet tas arī nozīmē, ka viņi var redzēt šeit ievadītās sesijas nosaukumu.</string>
     <string name="threads_notice_migration_title">Pavedieni tuvojas Beta 🎉</string>
-    <string name="labs_enable_new_app_layout_summary">Vienkāršots SchildiChat ar cilnēm pēc izvēles</string>
+    <string name="labs_enable_new_app_layout_summary">Vienkāršots KebabChat ar cilnēm pēc izvēles</string>
     <string name="labs_enable_deferred_dm_title">Iespējot atliktās tiešās ziņas</string>
     <string name="space_list_empty_message">Vietas ir jauns veids, kā apkopot istabas un cilvēkus. Jāizveido vieta, lai sāktu.</string>
     <string name="room_unsupported_e2e_algorithm">Šifrēšanas konfigurācijā ir kļūmes, tādēļ nevar nosūtīt ziņas. Lūgums sazināties ar pārvaldītāju, lai atjaunotu šifrēšanu derīgā stāvoklī.</string>
