@@ -2916,5 +2916,5 @@ Di masa mendatang proses verifikasi ini akan dimutakhirkan.</string>
 \nJika Anda tidak ingin melihat konten lagi dari pengguna ini, Anda dapat mengabaikan untuk menyembunyikan pesannya.</string>
     <string name="microphone_in_use_title">Mikrofon digunakan</string>
     <string name="call_unsupported">Panggilan tidak didukung</string>
-    <string name="call_unsupported_matrix_rtc_call">Panggilan tidak didukung. Aplikasi SchildiChat X yang baru diperlukan untuk bergabung ke panggilan ini.</string>
+    <string name="call_unsupported_matrix_rtc_call">Panggilan tidak didukung. Aplikasi SchildiChat Next yang baru diperlukan untuk bergabung ke panggilan ini.</string>
 </resources>

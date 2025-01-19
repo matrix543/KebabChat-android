@@ -3079,5 +3079,5 @@
     <string name="create_room_unknown_users_dialog_submit">Всё равно начать беседу</string>
     <string name="microphone_in_use_title">Используется микрофон</string>
     <string name="call_unsupported">Неподдерживаемый вызов</string>
-    <string name="call_unsupported_matrix_rtc_call">Вызов не поддерживается. Для подключения к этому вызову необходимо новое приложение SchildiChat X.</string>
+    <string name="call_unsupported_matrix_rtc_call">Вызов не поддерживается. Для подключения к этому вызову необходимо новое приложение SchildiChat Next.</string>
 </resources>

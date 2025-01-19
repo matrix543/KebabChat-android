@@ -2971,6 +2971,6 @@
     <string name="settings_discovery_consent_notice_off_2">თქვენი კონტაქტები კერძოა. კონტაქტებიდან მომხმარებლების აღმოსაჩენად, საჭიროა თქვენი ნებართვა, რომ კონტაქტების ინფორმაცია გაგზავნოთ თქვენი იდენტობის სერვერზე.</string>
     <string name="ftue_personalize_lets_go">წავიდეთ</string>
     <string name="call_unsupported">მხარდაუჭერი ზარი</string>
-    <string name="call_unsupported_matrix_rtc_call">მხარდაუჭერი ზარი. ამ ზარში შესაერთებლად საჭიროა ახალი აპლიკაცია SchildiChat X.</string>
+    <string name="call_unsupported_matrix_rtc_call">მხარდაუჭერი ზარი. ამ ზარში შესაერთებლად საჭიროა ახალი აპლიკაცია SchildiChat Next.</string>
     <string name="pill_message_unknown_room_or_space">ოთახი/სივრცე</string>
 </resources>

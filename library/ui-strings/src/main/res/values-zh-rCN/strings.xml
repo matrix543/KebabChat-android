@@ -2914,5 +2914,5 @@
     <string name="invite_unknown_users_dialog_submit">无论如何都邀请</string>
     <string name="microphone_in_use_title">麦克风正在使用</string>
     <string name="call_unsupported">不支持的通话</string>
-    <string name="call_unsupported_matrix_rtc_call">不支持的通话。需要新的SchildiChat X应用来加入此通话。</string>
+    <string name="call_unsupported_matrix_rtc_call">不支持的通话。需要新的SchildiChat Next应用来加入此通话。</string>
 </resources>

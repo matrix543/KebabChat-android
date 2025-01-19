@@ -2559,7 +2559,7 @@
     <string name="microphone_in_use_title">Micro đang được sử dụng</string>
     <string name="invite_unknown_users_dialog_submit">Cứ mời cho tôi</string>
     <string name="call_unsupported">Cuộc gọi không được hỗ trợ</string>
-    <string name="call_unsupported_matrix_rtc_call">Cuộc gọi này chỉ được ứng dụng SchildiChat X hỗ trợ.</string>
+    <string name="call_unsupported_matrix_rtc_call">Cuộc gọi này chỉ được ứng dụng SchildiChat Next hỗ trợ.</string>
     <string name="login_splash_sign_in">Đăng nhập</string>
     <string name="error_audio_message_unable_to_play">Không thể phát %1$s</string>
     <string name="settings_troubleshoot_test_system_settings_permission_failed">${app_name} cần quyền để hiển thị thông báo.
