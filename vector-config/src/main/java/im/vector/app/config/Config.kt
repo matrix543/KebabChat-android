@@ -103,9 +103,9 @@ object Config {
      * Fork maintainers can use this to inform users about their new application if any. Note that you probably also want
      * to replace the resource `replacement_app_icon` too.
      */
-    val sunsetConfig: SunsetConfig = SunsetConfig.Enabled(
-            learnMoreLink = "https://element.io/app-for-productivity",
-            replacementApplicationName = "Element X",
-            replacementApplicationId = "io.element.android.x",
-    )
+    val sunsetConfig: SunsetConfig = SunsetConfig.Disabled /* SunsetConfig.Enabled(
+            learnMoreLink = "https://schildi.chat/android/next",
+            replacementApplicationName = "SchildiChat Next",
+            replacementApplicationId = "chat.schildi.android",
+    ) */
 }
