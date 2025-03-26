@@ -34,7 +34,7 @@
     <string name="bubble_time_location_top">Oben</string>
     <string name="bubble_time_location_bottom">Unten</string>
     <string name="labs_mark_rooms_unread">Chats als ungelesen markieren</string>
-    <string name="labs_mark_rooms_unread_summary">Erlaube, Chats als ungelesen zu markieren. Andere Matrix-Clients unterstützen dies möglicherweise noch nicht.</string>
+    <string name="labs_mark_rooms_unread_summary">Ermöglicht, Chats als ungelesen zu markieren. Andere Matrix-Clients unterstützen dies möglicherweise noch nicht.</string>
     <string name="url_previews_in_encrypted_rooms">URL-Vorschau in verschlüsselten Chats</string>
     <string name="url_previews_in_encrypted_rooms_summary">Dies offenbart in Nachrichten enthaltene URLs gegenüber dem Homeserver!</string>
     <string name="login_mobile_device_sc">SchildiChat Android</string>
@@ -56,7 +56,7 @@
     <string name="settings_sc_accent_disclaimer">Beachte, dass diese Farbeinstellungen nur auf SC-Themen angewendet werden, nicht auf Element-Themen.</string>
     <string name="settings_show_voice_message_recorder_ui">Sprachnachrichten</string>
     <string name="sc_accent_orange">Orange</string>
-    <string name="settings_show_voice_message_recorder_ui_summary">Zeige einen Button zum Aufnehmen von Sprachnachrichten</string>
+    <string name="settings_show_voice_message_recorder_ui_summary">Button zum Aufnehmen von Sprachnachrichten anzeigen</string>
     <string name="sc_accent_purple">Violett</string>
     <string name="settings_user_colors_in_dm">Nutzerfarben in direkten Chats</string>
     <string name="settings_user_colors_in_default">Nutzerfarben in Gruppenchats</string>
@@ -73,7 +73,7 @@
     <string name="sc_accent_cyan">Zyan</string>
     <string name="sc_accent_pink">Rosa</string>
     <string name="settings_user_colors_in_public_rooms">Nutzerfarben in öffentlichen Räumen</string>
-    <string name="settings_open_chats_at_first_unread">Öffnen bei der ersten ungelesenen Nachricht</string>
+    <string name="settings_open_chats_at_first_unread">Öffnen bei erster ungelesener Nachricht</string>
     <string name="settings_open_chats_at_first_unread_summary">Chats bei der ersten ungelesenen Nachricht öffnen, statt an der neuesten.</string>
     <string name="sc_accent_denim">Jeansblau</string>
     <string name="sc_accent_indigo">Indigoblau</string>
