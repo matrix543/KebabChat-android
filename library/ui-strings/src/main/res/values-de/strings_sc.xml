@@ -91,7 +91,7 @@
     <string name="settings_unimportant_counter_badge_v2">Stummgeschaltete Nachrichten mitzählen</string>
     <string name="settings_unimportant_counter_badge_summary_v2">Anzahl stummgeschalteter Nachrichten in der Chatübersicht anzeigen</string>
     <string name="settings_aggregate_unread_counts">Chats statt Nachrichten zählen</string>
-    <string name="settings_aggregate_unread_counts_summary">Ungelesene Chats statt einzelner Nachrichten in Spaces und Raumkategorien zählen</string>
+    <string name="settings_aggregate_unread_counts_summary">Anzahl ungelesener Chats statt einzelner Nachrichten in Spaces und Raumkategorien anzeigen</string>
     <string name="user_colors_uniform">Einheitlich</string>
     <string name="room_list_quick_actions_open_at_bottom">Bei neuesten Nachrichten öffnen</string>
     <string name="send_bug_report_sc_extra">Damit dein Problem besser erkannt wird, kannst du unter https://github.com/SchildiChat/SchildiChat-android/issues ein Issue eröffnen und dabei auf diesen Bericht (unter Angabe deiner Matrix-ID und des ungefähren Zeitpunkts seines Versands) verweisen. (Bitte prüfe vorher, ob es für dein Problem bereits ein Issue gibt, und erstelle nur dann ein neues, wenn dies nicht der Fall ist).</string>
