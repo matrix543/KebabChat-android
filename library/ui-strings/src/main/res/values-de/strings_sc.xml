@@ -8,13 +8,13 @@
     <string name="settings_room_unread_kind_group">Gruppenchat-Vorschau</string>
     <string name="settings_room_unread_kind_default">Alle Ereignisse zeigen</string>
     <string name="settings_room_unread_kind_content">Teilnehmeränderungen ausblenden</string>
-    <string name="settings_room_unread_kind_original_content">Änderungen und Reaktionen von Teilnehmern nicht anzeigen</string>
+    <string name="settings_room_unread_kind_original_content">Verstecke Mitgliederänderungen und Reaktionen</string>
     <string name="settings_simplified_mode">Einfacher Modus</string>
-    <string name="settings_simplified_mode_summary">Erweiterte Funktionalität, einschließlich Verzeichnisse öffentlicher Räume und Einstellungen zur Chat-Verschlüsselung, ausblenden</string>
+    <string name="settings_simplified_mode_summary">Blende erweiterte Funktionen, einschließlich Verzeichnisse öffentlicher Räume und Einstellungen zur Chat-Verschlüsselung, aus</string>
     <string name="prompt_simplified_mode_title">Benutzeroberfläche festlegen</string>
     <string name="prompt_simplified_mode_text">Dies kann später in den Einstellungen geändert werden.</string>
     <string name="prompt_simplified_mode_on">Einfach</string>
-    <string name="prompt_simplified_mode_on_text">Ich möchte nur mit mir bekannten Leuten kommunizieren, und finde zusätzliche Optionen verwirrend.</string>
+    <string name="prompt_simplified_mode_on_text">Ich möchte nur mit mir bekannten Leuten kommunizieren, und brauche keine zusätzlichen Optionen.</string>
     <string name="prompt_simplified_mode_off">Vollständig</string>
     <string name="prompt_simplified_mode_off_text">Ich bevorzuge den vollen Funktionsumfang, einschließlich der Erkundung öffentlicher Räume und fein abgestimmter Raum- und Verschlüsselungseinstellungen.</string>
     <string name="settings_light_theme">Helles Design</string>
@@ -108,7 +108,7 @@
     <string name="settings_force_allow_background_sync_summary">Nur aussagekräftig während der Fehlersuche Ihrer Push-Einstellungen!</string>
     <string name="settings_apply_sc_default_settings_dialog_title">Einstellungen durcheinanderbringen</string>
     <string name="settings_enable_space_pager">Chatliste wischen um Space zu wechseln</string>
-    <string name="settings_enable_space_pager_summary">Erlaube das Wechseln zwischen Wurzelspaces durch horizontales Wischen in der Chatliste</string>
+    <string name="settings_enable_space_pager_summary">Erlaube das Wechseln zwischen Spaces durch horizontales Wischen in der Chatliste</string>
     <string name="bubble_style_element">Element</string>
     <string name="bubble_appearance">Sprechblasenaussehen</string>
     <string name="bubble_rounded_corners">Ecken</string>
