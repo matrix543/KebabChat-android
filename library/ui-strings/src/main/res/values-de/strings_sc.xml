@@ -94,7 +94,7 @@
     <string name="settings_aggregate_unread_counts_summary">Zähle die ungelesenen Chats statt einzelner Nachrichten in Spaces und Raumkategorien</string>
     <string name="user_colors_uniform">Einheitlich</string>
     <string name="room_list_quick_actions_open_at_bottom">Bei neuesten Nachrichten öffnen</string>
-    <string name="send_bug_report_sc_extra">Um die Sichtbarkeit Ihres Issues zu erhöhen, können Sie auf diesen Bericht (unter Angabe Ihrer Matrix-ID und des ungefähren Zeitpunkts, zu dem er gesendet wurde) in einem Issue unter https://github.com/SchildiChat/SchildiChat-android/issues verweisen (prüfen Sie zunächst, ob für Ihr Problem bereits ein Issue existiert, und erstellen Sie nur dann ein neues, wenn dies nicht der Fall ist).</string>
+    <string name="send_bug_report_sc_extra">Damit dein Problem besser erkannt wird, kannst du unter https://github.com/SchildiChat/SchildiChat-android/issues ein Issue eröffnen und dabei auf diesen Bericht (unter Angabe deiner Matrix-ID und des ungefähren Zeitpunkts seines Versands) verweisen. (Bitte prüfe vorher, ob es für dein Problem bereits ein Issue gibt, und erstelle nur dann ein neues, wenn dies nicht der Fall ist).</string>
     <string name="settings_jump_to_bottom_on_send_summary">Beim Senden einer Nachricht automatisch nach unten scrollen</string>
     <string name="settings_apply_sc_default_settings">Diese Einstellung nicht anklicken</string>
     <string name="settings_apply_sc_default_settings_dialog_summary">Wenn Sie fortfahren, werden Ihre App-Einstellungen durcheinander gebracht!</string>
