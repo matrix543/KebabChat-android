@@ -173,4 +173,7 @@
     <string name="freeform_react_with">Reagir com \"%1$s\"</string>
     <string name="settings_floating_date_summary">Mostrar a data acima de mensagens durante a rolagem</string>
     <string name="settings_show_open_anonymous_summary">Mostrar opção para abrir uma sala sem automaticamente marcá-la como lida</string>
+    <string name="settings_call_ringtone_use_default_stun_summary">Usará %s como assistência quando seu servidor não oferecer um (seu endereço IP será visto pelo servidor STUN durante chamadas)</string>
+    <string name="settings_read_receipt_follows_read_marker_summary">Não atualizar seu recibo de leitura ao abrir a sala, mas apenas gradualmente durante a leitura</string>
+    <string name="settings_space_pager_prefer_space_1_summary">Priorizar mostrar espaços na barra de espaços inferior que você moveu para o topo da sua lista de espaços raiz</string>
 </resources>
