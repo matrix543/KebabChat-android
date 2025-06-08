@@ -112,4 +112,21 @@
     <string name="standard_emojis">Emojis standards</string>
     <string name="setting_sc_accent_color">Couleur d\'accompagnement</string>
     <string name="settings_read_receipt_follows_read_marker">Ne marquer les chats comme lus que s\'ils sont entièrement lus</string>
+    <string name="settings_enable_member_name_click_summary">Cliquer sur un nom d\'utilisateur pour le mentionner</string>
+    <string name="settings_enable_member_name_click">Noms cliquables</string>
+    <string name="dev_tools_menu_hidden_events">Évènements cachés</string>
+    <string name="dev_tools_menu_redacted">Messages supprimés</string>
+    <string name="settings_initial_sync">Synchronisation initiale</string>
+    <string name="settings_include_space_members_as_rooms">Afficher les utilisateurs dans les espaces</string>
+    <string name="dev_tools_menu_event_visibilities">Visibilités des évènements</string>
+    <string name="settings_notif_only_alert_once">Alerter une seule fois</string>
+    <string name="settings_hide_call_buttons">Masquer les boutons d\'appel</string>
+    <string name="room_settings_default">Par défaut</string>
+    <string name="settings_sc_debugging">Schildi-débogage</string>
+    <string name="settings_sc_debugging_summary">Activer des journaux ou des fonctionnalités de débogage supplémentaires</string>
+    <string name="freeform_react_with">Réagir avec \"%1$s\"</string>
+    <string name="app_desktop_web_sc">${app_name_sc_stable} Web\n${app_name_sc_stable} Desktop</string>
+    <string name="settings_notif_only_alert_once_summary">Ne pas émettre de sons d\'alerte s\'il existe déjà une notification ouverte pour ce chat</string>
+    <string name="app_ios_android_sc">${app_name_sc_stable} Android</string>
+    <string name="settings_initial_sync_summary">Vider le cache et recharger le serveur</string>
 </resources>
