@@ -127,7 +127,7 @@ class MessageInformationDataFactory @Inject constructor(
         }
 
         // Sender power level
-        val senderPowerLevel = params.partialState.powerLevelsHelper?.getUserPowerLevelValue(event.senderInfo.userId)
+        val senderPowerLevel = params.partialState.powerLevels?.getUserPowerLevel(event.senderInfo.userId)
 
         val messageLayout = messageLayoutFactory.create(params)
 

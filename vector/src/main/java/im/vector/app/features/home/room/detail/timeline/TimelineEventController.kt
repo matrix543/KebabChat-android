@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.EpoxyController
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.VisibilityState
-import de.spiritcroc.matrixsdk.util.DbgUtil
 import im.vector.app.core.date.DateFormatKind
 import im.vector.app.core.date.VectorDateFormatter
 import im.vector.app.core.epoxy.LoadingItem_
@@ -70,7 +69,7 @@ import org.matrix.android.sdk.api.session.room.model.RoomSummary
 import org.matrix.android.sdk.api.session.room.model.message.MessageAudioContent
 import org.matrix.android.sdk.api.session.room.model.message.MessageImageInfoContent
 import org.matrix.android.sdk.api.session.room.model.message.MessageVideoContent
-import org.matrix.android.sdk.api.session.room.powerlevels.PowerLevelsHelper
+import org.matrix.android.sdk.api.session.room.powerlevels.RoomPowerLevels
 import org.matrix.android.sdk.api.session.room.read.ReadService
 import org.matrix.android.sdk.api.session.room.timeline.Timeline
 import org.matrix.android.sdk.api.session.room.timeline.TimelineEvent
@@ -105,7 +104,7 @@ class TimelineEventController @Inject constructor(
             val highlightedEventId: String? = null,
             val jitsiState: JitsiState = JitsiState(),
             val roomSummary: RoomSummary? = null,
-            val powerLevelsHelper: PowerLevelsHelper? = null,
+            val powerLevels: RoomPowerLevels? = null,
             val rootThreadEventId: String? = null,
     ) {
 
@@ -114,7 +113,7 @@ class TimelineEventController @Inject constructor(
                 highlightedEventId = state.highlightedEventId,
                 jitsiState = state.jitsiState,
                 roomSummary = state.asyncRoomSummary(),
-                powerLevelsHelper = state.powerLevelsHelper,
+                powerLevels = state.powerLevels,
                 rootThreadEventId = state.rootThreadEventId,
         )
 
@@ -318,7 +317,7 @@ class TimelineEventController @Inject constructor(
             return
         }
         // Full list rebuild if power levels changed and username colors depend on power levels
-        if (partialState.powerLevelsHelper != newPartialState.powerLevelsHelper) {
+        if (partialState.powerLevels != newPartialState.powerLevels) {
             val coloringMode = vectorPreferences.userColorMode(newPartialState.roomSummary?.isDirect ?: false, newPartialState.roomSummary?.isPublic ?: false)
             if (coloringMode == MatrixItemColorProvider.USER_COLORING_FROM_PL) {
                 partialState = newPartialState

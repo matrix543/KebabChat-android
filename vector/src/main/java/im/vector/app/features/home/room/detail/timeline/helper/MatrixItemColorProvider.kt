@@ -15,6 +15,7 @@ import androidx.annotation.VisibleForTesting
 import im.vector.app.core.resources.ColorProvider
 import im.vector.app.features.settings.VectorPreferences
 import im.vector.lib.ui.styles.R
+import org.matrix.android.sdk.api.session.room.powerlevels.UserPowerLevel
 import org.matrix.android.sdk.api.util.MatrixItem
 import timber.log.Timber
 import javax.inject.Inject
@@ -40,11 +41,11 @@ class MatrixItemColorProvider @Inject constructor(
                 colorProvider.getColorFromAttribute(
                         when {
                             userInRoomInformation?.userPowerLevel == null -> com.google.android.material.R.attr.colorAccent // This is also used for avatars in the room overview
-                            userInRoomInformation.userPowerLevel >= 100 -> R.attr.user_color_pl_100
-                            userInRoomInformation.userPowerLevel >= 95 -> R.attr.user_color_pl_95
-                            userInRoomInformation.userPowerLevel >= 51 -> R.attr.user_color_pl_51
-                            userInRoomInformation.userPowerLevel >= 50 -> R.attr.user_color_pl_50
-                            userInRoomInformation.userPowerLevel >= 1 -> R.attr.user_color_pl_1
+                            userInRoomInformation.userPowerLevel >= UserPowerLevel.Value(100) -> R.attr.user_color_pl_100
+                            userInRoomInformation.userPowerLevel >= UserPowerLevel.Value(95) -> R.attr.user_color_pl_95
+                            userInRoomInformation.userPowerLevel >= UserPowerLevel.Value(51) -> R.attr.user_color_pl_51
+                            userInRoomInformation.userPowerLevel >= UserPowerLevel.Value(50) -> R.attr.user_color_pl_50
+                            userInRoomInformation.userPowerLevel >= UserPowerLevel.Value(1) -> R.attr.user_color_pl_1
                             else -> R.attr.user_color_pl_0
                         }
                 )
@@ -171,5 +172,5 @@ class MatrixItemColorProvider @Inject constructor(
         const val USER_COLORING_DEFAULT = USER_COLORING_UNIFORM
     }
 
-    data class UserInRoomInformation(val isDm: Boolean? = null, val isPublicRoom: Boolean? = null, val userPowerLevel: Int? = null)
+    data class UserInRoomInformation(val isDm: Boolean? = null, val isPublicRoom: Boolean? = null, val userPowerLevel: UserPowerLevel? = null)
 }

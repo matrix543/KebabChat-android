@@ -11,6 +11,7 @@ import android.os.Parcelable
 import im.vector.app.features.home.room.detail.timeline.style.TimelineMessageLayout
 import kotlinx.parcelize.Parcelize
 import org.matrix.android.sdk.api.session.crypto.verification.VerificationState
+import org.matrix.android.sdk.api.session.room.powerlevels.UserPowerLevel
 import org.matrix.android.sdk.api.session.room.send.SendState
 import org.matrix.android.sdk.api.util.MatrixItem
 
@@ -34,7 +35,7 @@ data class MessageInformationData(
         val isDirect: Boolean,
         val isPublic: Boolean,
         val isReply: Boolean,
-        val senderPowerLevel: Int?,
+        val senderPowerLevel: UserPowerLevel?,
         val dmChatPartnerId: String?,
         val e2eDecoration: E2EDecoration = E2EDecoration.NONE,
         val sendStateDecoration: SendStateDecoration = SendStateDecoration.NONE,

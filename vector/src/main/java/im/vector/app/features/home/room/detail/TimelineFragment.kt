@@ -34,13 +34,10 @@ import androidx.core.net.toUri
 import androidx.core.text.toSpannable
 import androidx.core.util.Pair
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.forEach
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.core.view.postDelayed
-import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withResumed
@@ -448,13 +445,6 @@ class TimelineFragment :
                 // SC end
                 is RoomDetailViewEvents.RevokeFilePermission -> revokeFilePermission(it)
             }
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(views.coordinatorLayout) { _, insets ->
-            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime() or WindowInsetsCompat.Type.systemBars())
-            views.appBarLayout.updatePadding(top = imeInsets.top)
-            views.voiceMessageRecorderContainer.updatePadding(bottom = imeInsets.bottom)
-            insets
         }
     }
 

@@ -186,7 +186,7 @@ class PlainTextComposerLayout @JvmOverloads constructor(
                     MatrixItemColorProvider.UserInRoomInformation(
                             it.isDm(),
                             it.isPublic(),
-                            it.powerLevelsHelper?.getUserPowerLevelValue(matrixItem.id)
+                            it.powerLevels?.getUserPowerLevel(matrixItem.id)
                     )
                 }
             }

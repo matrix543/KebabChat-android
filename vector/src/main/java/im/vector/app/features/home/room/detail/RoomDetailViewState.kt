@@ -18,7 +18,7 @@ import org.matrix.android.sdk.api.session.room.members.ChangeMembershipState
 import org.matrix.android.sdk.api.session.room.model.RoomMemberSummary
 import org.matrix.android.sdk.api.session.room.model.RoomSummary
 import org.matrix.android.sdk.api.session.room.model.localecho.RoomLocalEcho
-import org.matrix.android.sdk.api.session.room.powerlevels.PowerLevelsHelper
+import org.matrix.android.sdk.api.session.room.powerlevels.RoomPowerLevels
 import org.matrix.android.sdk.api.session.room.sender.SenderInfo
 import org.matrix.android.sdk.api.session.sync.SyncRequestState
 import org.matrix.android.sdk.api.session.sync.SyncState
@@ -48,7 +48,7 @@ data class RoomDetailViewState(
         val myRoomMember: Async<RoomMemberSummary> = Uninitialized,
         val asyncInviter: Async<RoomMemberSummary> = Uninitialized,
         val asyncRoomSummary: Async<RoomSummary> = Uninitialized,
-        val powerLevelsHelper: PowerLevelsHelper? = null,
+        val powerLevels: RoomPowerLevels? = null,
         val openAtFirstUnread: Boolean? = null,
         val openAnonymously: Boolean = false,
         val activeRoomWidgets: Async<List<Widget>> = Uninitialized,
