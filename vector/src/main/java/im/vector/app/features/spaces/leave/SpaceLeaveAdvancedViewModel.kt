@@ -1,17 +1,8 @@
 /*
- * Copyright (c) 2021 New Vector Ltd
+ * Copyright 2021-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.spaces.leave
@@ -29,22 +20,16 @@ import im.vector.app.core.di.MavericksAssistedViewModelFactory
 import im.vector.app.core.di.hiltMavericksViewModelFactory
 import im.vector.app.core.platform.EmptyViewEvents
 import im.vector.app.core.platform.VectorViewModel
+import im.vector.app.features.powerlevel.isLastAdminFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import okhttp3.internal.toImmutableList
-import org.matrix.android.sdk.api.query.QueryStringValue
 import org.matrix.android.sdk.api.query.RoomCategoryFilter
 import org.matrix.android.sdk.api.query.SpaceFilter
 import org.matrix.android.sdk.api.session.Session
-import org.matrix.android.sdk.api.session.events.model.EventType
-import org.matrix.android.sdk.api.session.events.model.toModel
 import org.matrix.android.sdk.api.session.getRoom
-import org.matrix.android.sdk.api.session.room.getStateEvent
 import org.matrix.android.sdk.api.session.room.model.Membership
-import org.matrix.android.sdk.api.session.room.model.PowerLevelsContent
-import org.matrix.android.sdk.api.session.room.powerlevels.PowerLevelsHelper
-import org.matrix.android.sdk.api.session.room.powerlevels.Role
 import org.matrix.android.sdk.api.session.room.roomSummaryQueryParams
 import org.matrix.android.sdk.flow.flow
 import org.matrix.android.sdk.flow.unwrap
@@ -58,22 +43,13 @@ class SpaceLeaveAdvancedViewModel @AssistedInject constructor(
 
     init {
         val space = session.getRoom(initialState.spaceId)
+
+        space?.isLastAdminFlow(session.myUserId)
+                ?.onEach { isLastAdmin ->
+                    setState { copy(isLastAdmin = isLastAdmin) }
+                }?.launchIn(viewModelScope)
+
         val spaceSummary = space?.roomSummary()
-
-        val powerLevelsEvent = space?.getStateEvent(EventType.STATE_ROOM_POWER_LEVELS, QueryStringValue.IsEmpty)
-        powerLevelsEvent?.content?.toModel<PowerLevelsContent>()?.let { powerLevelsContent ->
-            val powerLevelsHelper = PowerLevelsHelper(powerLevelsContent)
-            val isAdmin = powerLevelsHelper.getUserRole(session.myUserId) is Role.Admin
-            val otherAdminCount = spaceSummary?.otherMemberIds
-                    ?.map { powerLevelsHelper.getUserRole(it) }
-                    ?.count { it is Role.Admin }
-                    ?: 0
-            val isLastAdmin = isAdmin && otherAdminCount == 0
-            setState {
-                copy(isLastAdmin = isLastAdmin)
-            }
-        }
-
         setState { copy(spaceSummary = spaceSummary) }
         session.getRoom(initialState.spaceId)
                 ?.flow()

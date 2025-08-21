@@ -1,17 +1,8 @@
 /*
- * Copyright 2021 New Vector Ltd
+ * Copyright 2021-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.roomprofile.permissions
@@ -35,6 +26,7 @@ import org.matrix.android.sdk.api.session.room.model.redactOrDefault
 import org.matrix.android.sdk.api.session.room.model.stateDefaultOrDefault
 import org.matrix.android.sdk.api.session.room.model.usersDefaultOrDefault
 import org.matrix.android.sdk.api.session.room.powerlevels.Role
+import org.matrix.android.sdk.api.session.room.powerlevels.UserPowerLevel
 import javax.inject.Inject
 
 class RoomPermissionsController @Inject constructor(
@@ -43,7 +35,7 @@ class RoomPermissionsController @Inject constructor(
 ) : TypedEpoxyController<RoomPermissionsViewState>() {
 
     interface Callback {
-        fun onEditPermission(editablePermission: EditablePermission, currentRole: Role)
+        fun onEditPermission(editablePermission: EditablePermission, currentPowerLevel: UserPowerLevel.Value)
         fun toggleShowAllPermissions()
     }
 
@@ -174,7 +166,8 @@ class RoomPermissionsController @Inject constructor(
             editable: Boolean,
             isSpace: Boolean
     ) {
-        val currentRole = getCurrentRole(editablePermission, content)
+        val currentPowerLevel = getPowerLevel(editablePermission, content)
+        val currentRole = Role.getSuggestedRole(currentPowerLevel)
         buildProfileAction(
                 id = editablePermission.labelResId.toString(),
                 title = stringProvider.getString(
@@ -186,12 +179,12 @@ class RoomPermissionsController @Inject constructor(
                 action = {
                     callback
                             ?.takeIf { editable }
-                            ?.onEditPermission(editablePermission, currentRole)
+                            ?.onEditPermission(editablePermission, currentPowerLevel)
                 }
         )
     }
 
-    private fun getCurrentRole(editablePermission: EditablePermission, content: PowerLevelsContent): Role {
+    private fun getPowerLevel(editablePermission: EditablePermission, content: PowerLevelsContent): UserPowerLevel.Value {
         val value = when (editablePermission) {
             is EditablePermission.EventTypeEditablePermission -> content.events?.get(editablePermission.eventType) ?: content.stateDefaultOrDefault()
             is EditablePermission.DefaultRole -> content.usersDefaultOrDefault()
@@ -203,20 +196,6 @@ class RoomPermissionsController @Inject constructor(
             is EditablePermission.RemoveMessagesSentByOthers -> content.redactOrDefault()
             is EditablePermission.NotifyEveryone -> content.notificationLevel(PowerLevelsContent.NOTIFICATIONS_ROOM_KEY)
         }
-
-        return Role.fromValue(
-                value,
-                when (editablePermission) {
-                    is EditablePermission.EventTypeEditablePermission -> content.stateDefaultOrDefault()
-                    is EditablePermission.DefaultRole -> Role.Default.value
-                    is EditablePermission.SendMessages -> Role.Default.value
-                    is EditablePermission.InviteUsers -> Role.Moderator.value
-                    is EditablePermission.ChangeSettings -> Role.Moderator.value
-                    is EditablePermission.KickUsers -> Role.Moderator.value
-                    is EditablePermission.BanUsers -> Role.Moderator.value
-                    is EditablePermission.RemoveMessagesSentByOthers -> Role.Moderator.value
-                    is EditablePermission.NotifyEveryone -> Role.Moderator.value
-                }
-        )
+        return UserPowerLevel.Value(value)
     }
 }

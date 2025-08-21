@@ -2,6 +2,7 @@ package im.vector.app.features.roomprofile.members
 
 import javax.inject.Inject
 
+/* TODO rm?
 class RoomMemberSummaryWithPowerComparator @Inject constructor(private val roomMemberSummaryComparator: RoomMemberSummaryComparator) : Comparator<RoomMemberListViewModel.RoomMemberSummaryWithPower> {
 
     override fun compare(leftRoomMemberSummary: RoomMemberListViewModel.RoomMemberSummaryWithPower?, rightRoomMemberSummary: RoomMemberListViewModel.RoomMemberSummaryWithPower?): Int {
@@ -12,3 +13,4 @@ class RoomMemberSummaryWithPowerComparator @Inject constructor(private val roomM
         }
     }
 }
+ */

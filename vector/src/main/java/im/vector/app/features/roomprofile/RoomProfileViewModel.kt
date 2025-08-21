@@ -1,18 +1,8 @@
 /*
- * Copyright 2019 New Vector Ltd
+ * Copyright 2019-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.roomprofile
@@ -29,7 +19,7 @@ import im.vector.app.core.resources.StringProvider
 import im.vector.app.features.analytics.AnalyticsTracker
 import im.vector.app.features.analytics.plan.Interaction
 import im.vector.app.features.home.ShortcutCreator
-import im.vector.app.features.powerlevel.PowerLevelsFlowFactory
+import im.vector.app.features.powerlevel.isLastAdminFlow
 import im.vector.app.features.session.coroutineScope
 import im.vector.lib.strings.CommonStrings
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +39,6 @@ import org.matrix.android.sdk.api.session.room.getStateEvent
 import org.matrix.android.sdk.api.session.room.members.roomMemberQueryParams
 import org.matrix.android.sdk.api.session.room.model.Membership
 import org.matrix.android.sdk.api.session.room.model.create.RoomCreateContent
-import org.matrix.android.sdk.api.session.room.powerlevels.PowerLevelsHelper
 import org.matrix.android.sdk.api.session.room.state.isPublic
 import org.matrix.android.sdk.flow.FlowRoom
 import org.matrix.android.sdk.flow.flow
@@ -82,6 +71,14 @@ class RoomProfileViewModel @AssistedInject constructor(
         observePermissions()
         observePowerLevels()
         observeCryptoSettings(flowRoom)
+        observeIsLastAdmin()
+    }
+
+    private fun observeIsLastAdmin() {
+        room.isLastAdminFlow(session.myUserId)
+                .onEach { isLastAdmin ->
+                    setState { copy(isLastAdmin = isLastAdmin) }
+                }.launchIn(viewModelScope)
     }
 
     private fun observeCryptoSettings(flowRoom: FlowRoom) {
@@ -123,11 +120,10 @@ class RoomProfileViewModel @AssistedInject constructor(
     }
 
     private fun observePowerLevels() {
-        val powerLevelsContentLive = PowerLevelsFlowFactory(room).createFlow()
+        val powerLevelsContentLive = room.flow().liveRoomPowerLevels()
         powerLevelsContentLive
-                .onEach {
-                    val powerLevelsHelper = PowerLevelsHelper(it)
-                    val canUpdateRoomState = powerLevelsHelper.isUserAllowedToSend(session.myUserId, true, EventType.STATE_ROOM_ENCRYPTION)
+                .onEach { roomPowerLevels ->
+                    val canUpdateRoomState = roomPowerLevels.isUserAllowedToSend(session.myUserId, true, EventType.STATE_ROOM_ENCRYPTION)
                     setState {
                         copy(canUpdateRoomState = canUpdateRoomState)
                     }
@@ -166,12 +162,10 @@ class RoomProfileViewModel @AssistedInject constructor(
     }
 
     private fun observePermissions() {
-        PowerLevelsFlowFactory(room)
-                .createFlow()
-                .setOnEach {
-                    val powerLevelsHelper = PowerLevelsHelper(it)
+        room.flow().liveRoomPowerLevels()
+                .setOnEach { roomPowerLevels ->
                     val permissions = RoomProfileViewState.ActionPermissions(
-                            canEnableEncryption = powerLevelsHelper.isUserAllowedToSend(session.myUserId, true, EventType.STATE_ROOM_ENCRYPTION)
+                            canEnableEncryption = roomPowerLevels.isUserAllowedToSend(session.myUserId, true, EventType.STATE_ROOM_ENCRYPTION)
                     )
                     copy(actionPermissions = permissions)
                 }
@@ -186,6 +180,26 @@ class RoomProfileViewModel @AssistedInject constructor(
             RoomProfileAction.CreateShortcut -> handleCreateShortcut()
             RoomProfileAction.RestoreEncryptionState -> restoreEncryptionState()
             is RoomProfileAction.SetEncryptToVerifiedDeviceOnly -> setEncryptToVerifiedDeviceOnly(action.enabled)
+            is RoomProfileAction.ReportRoom -> handleReportRoom(action.reason)
+        }
+    }
+
+    private fun handleReportRoom(reason: String) {
+        _viewEvents.post(RoomProfileViewEvents.Loading())
+        session.coroutineScope.launch {
+            try {
+                room.reportingService().reportRoom(reason = reason)
+                _viewEvents.post(
+                        RoomProfileViewEvents.Success(
+                                stringProvider.getString(CommonStrings.room_profile_section_more_report_success_content)
+                        )
+                )
+            } catch (failure: Throwable) {
+                Timber.e(failure, "Failed to report room ${room.roomId}")
+                _viewEvents.post(RoomProfileViewEvents.Failure(failure))
+            } finally {
+                _viewEvents.post(RoomProfileViewEvents.DismissLoading)
+            }
         }
     }
 

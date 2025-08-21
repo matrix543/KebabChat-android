@@ -1,27 +1,20 @@
 /*
- * Copyright (c) 2020 New Vector Ltd
+ * Copyright 2020-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.call
 
+import android.Manifest
 import android.app.Activity
 import android.app.KeyguardManager
 import android.app.PictureInPictureParams
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.media.projection.MediaProjection
 import android.media.projection.MediaProjectionManager
@@ -40,6 +33,8 @@ import androidx.core.content.getSystemService
 import androidx.core.util.Consumer
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.airbnb.mvrx.Fail
 import com.airbnb.mvrx.Mavericks
 import com.airbnb.mvrx.viewModel
@@ -57,6 +52,7 @@ import im.vector.app.core.utils.PERMISSIONS_FOR_VIDEO_IP_CALL
 import im.vector.app.core.utils.checkPermissions
 import im.vector.app.core.utils.registerForPermissionsResult
 import im.vector.app.databinding.ActivityCallBinding
+import im.vector.app.features.call.audio.MicrophoneAccessService
 import im.vector.app.features.call.dialpad.CallDialPadBottomSheet
 import im.vector.app.features.call.dialpad.DialPadFragment
 import im.vector.app.features.call.transfer.CallTransferActivity
@@ -132,7 +128,9 @@ class VectorCallActivity :
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        @Suppress("DEPRECATION")
         window.statusBarColor = Color.TRANSPARENT
+        @Suppress("DEPRECATION")
         window.navigationBarColor = Color.BLACK
         super.onCreate(savedInstanceState)
         addOnPictureInPictureModeChangedListener(pictureInPictureModeChangedInfoConsumer)
@@ -189,6 +187,9 @@ class VectorCallActivity :
 
     override fun getMenuRes() = R.menu.vector_call
 
+    override val rootView: View
+        get() = views.constraintLayout
+
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
         enterPictureInPictureIfRequired()
@@ -243,6 +244,57 @@ class VectorCallActivity :
             }
             else -> false
         }
+    }
+
+    private fun startMicrophoneService() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                == PackageManager.PERMISSION_GRANTED) {
+            // Only start the service if the app is in the foreground
+            if (isAppInForeground()) {
+                withState(callViewModel) {
+                    // Starting in Android 14, you can't create a microphone foreground service while your app is in
+                    // the background. If we call startForegroundService while the call state is ringing (i.e. the
+                    // user has not interacted with the device at all) the app will crash. Make sure the call has
+                    // already been answered before starting the MicrophoneAccessService
+                    // https://github.com/element-hq/element-android/issues/8964
+                    val callState = it.callState.invoke()
+                    if (callState !is CallState.LocalRinging && callState !is CallState.Ended && callState != null) {
+                        Timber.tag(loggerTag.value).v("Starting microphone foreground service")
+                        val intent = Intent(this, MicrophoneAccessService::class.java)
+                        ContextCompat.startForegroundService(this, intent)
+                    } else {
+                        Timber.tag(loggerTag.value).v("Call is in ringing or ended state; cannot start microphone service. callState: $callState")
+                    }
+                }
+            } else {
+                Timber.tag(loggerTag.value).v("App is not in foreground; cannot start microphone service")
+            }
+        } else {
+            Timber.tag(loggerTag.value).v("Microphone permission not granted; cannot start service")
+        }
+    }
+
+    private fun isAppInForeground(): Boolean {
+        val appProcess = ProcessLifecycleOwner.get().lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)
+        return appProcess
+    }
+    private fun stopMicrophoneService() {
+        Timber.tag(loggerTag.value).d("Stopping MicrophoneAccessService (if needed).")
+        val intent = Intent(this, MicrophoneAccessService::class.java)
+        stopService(intent)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        // Start the microphone service to keep access to the microphone when the call is in the background
+        // https://github.com/element-hq/element-android/issues/8881
+        startMicrophoneService()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        stopMicrophoneService()
     }
 
     override fun onDestroy() {

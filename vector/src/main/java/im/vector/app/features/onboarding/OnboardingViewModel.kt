@@ -1,17 +1,8 @@
 /*
- * Copyright 2019 New Vector Ltd
+ * Copyright 2019-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.onboarding
@@ -21,6 +12,8 @@ import com.airbnb.mvrx.MavericksViewModelFactory
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import im.vector.app.config.Config
+import im.vector.app.config.SunsetConfig
 import im.vector.app.core.di.ActiveSessionHolder
 import im.vector.app.core.di.MavericksAssistedViewModelFactory
 import im.vector.app.core.di.hiltMavericksViewModelFactory
@@ -770,7 +763,13 @@ class OnboardingViewModel @AssistedInject constructor(
                 }
                 OnboardingFlow.SignUp -> {
                     updateSignMode(SignMode.SignUp)
-                    internalRegisterAction(RegisterAction.StartRegistration)
+                    if (authResult.selectedHomeserver.hasOidcCompatibilityFlow && Config.sunsetConfig is SunsetConfig.Enabled) {
+                        // Navigate to the screen to create an account, it will show the error
+                        setState { copy(isLoading = false) }
+                        _viewEvents.post(OnboardingViewEvents.OpenCombinedRegister)
+                    } else {
+                        internalRegisterAction(RegisterAction.StartRegistration)
+                    }
                 }
                 OnboardingFlow.SignInSignUp,
                 null -> {
@@ -784,9 +783,17 @@ class OnboardingViewModel @AssistedInject constructor(
 
     private suspend fun onHomeServerEdited(config: HomeServerConnectionConfig, serverTypeOverride: ServerType?, authResult: StartAuthenticationResult) {
         when (awaitState().onboardingFlow) {
-            OnboardingFlow.SignUp -> internalRegisterAction(RegisterAction.StartRegistration) {
-                updateServerSelection(config, serverTypeOverride, authResult)
-                _viewEvents.post(OnboardingViewEvents.OnHomeserverEdited)
+            OnboardingFlow.SignUp -> {
+                if (authResult.selectedHomeserver.hasOidcCompatibilityFlow && Config.sunsetConfig is SunsetConfig.Enabled) {
+                    // An error is displayed now
+                    setState { copy(isLoading = false) }
+                    _viewEvents.post(OnboardingViewEvents.Failure(MasSupportRequiredException()))
+                } else {
+                    internalRegisterAction(RegisterAction.StartRegistration) {
+                        updateServerSelection(config, serverTypeOverride, authResult)
+                        _viewEvents.post(OnboardingViewEvents.OnHomeserverEdited)
+                    }
+                }
             }
             OnboardingFlow.SignIn -> {
                 updateServerSelection(config, serverTypeOverride, authResult)
@@ -933,7 +940,10 @@ private fun LoginMode.supportsSignModeScreen(): Boolean {
     return when (this) {
         LoginMode.Password,
         is LoginMode.SsoAndPassword -> true
-        is LoginMode.Sso,
+        is LoginMode.Sso -> {
+            // In this case, an error will be displayed in the next screen
+            hasOidcCompatibilityFlow
+        }
         LoginMode.Unknown,
         LoginMode.Unsupported -> false
     }

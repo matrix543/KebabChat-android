@@ -1,29 +1,24 @@
 /*
- * Copyright (c) 2022 New Vector Ltd
+ * Copyright 2022-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.location.live.tracking
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.IBinder
 import android.os.Parcelable
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.core.di.ActiveSessionHolder
 import im.vector.app.core.extensions.startForegroundCompat
 import im.vector.app.core.services.VectorAndroidService
+import im.vector.app.core.utils.PermissionChecker
 import im.vector.app.features.location.LocationData
 import im.vector.app.features.location.LocationTracker
 import im.vector.app.features.location.live.GetLiveLocationShareSummaryUseCase
@@ -61,6 +56,7 @@ class LocationSharingAndroidService : VectorAndroidService(), LocationTracker.Ca
     @Inject lateinit var activeSessionHolder: ActiveSessionHolder
     @Inject lateinit var getLiveLocationShareSummaryUseCase: GetLiveLocationShareSummaryUseCase
     @Inject lateinit var checkIfEventIsRedactedUseCase: CheckIfEventIsRedactedUseCase
+    @Inject lateinit var permissionChecker: PermissionChecker
 
     private var binder: LocationSharingAndroidServiceBinder? = null
 
@@ -83,7 +79,15 @@ class LocationSharingAndroidService : VectorAndroidService(), LocationTracker.Ca
     private fun initLocationTracking() {
         // Start tracking location
         locationTracker.addCallback(this)
-        locationTracker.start()
+        if (permissionChecker.checkPermission(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                )
+        ) {
+            locationTracker.start()
+        } else {
+            Timber.w("Not allowed to use location api.")
+        }
 
         launchWithActiveSession { session ->
             val job = locationTracker.locations
@@ -104,7 +108,11 @@ class LocationSharingAndroidService : VectorAndroidService(), LocationTracker.Ca
             // Show a sticky notification
             val notification = liveLocationNotificationBuilder.buildLiveLocationSharingNotification(roomArgs.roomId)
             if (foregroundModeStarted) {
-                NotificationManagerCompat.from(this).notify(FOREGROUND_SERVICE_NOTIFICATION_ID, notification)
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                    Timber.w("Not allowed to notify.")
+                } else {
+                    NotificationManagerCompat.from(this).notify(FOREGROUND_SERVICE_NOTIFICATION_ID, notification)
+                }
             } else {
                 startForegroundCompat(FOREGROUND_SERVICE_NOTIFICATION_ID, notification)
                 foregroundModeStarted = true
@@ -155,10 +163,14 @@ class LocationSharingAndroidService : VectorAndroidService(), LocationTracker.Ca
     }
 
     private fun updateNotification() {
-        if (liveInfoSet.isNotEmpty()) {
-            val roomId = liveInfoSet.last().roomArgs.roomId
-            val notification = liveLocationNotificationBuilder.buildLiveLocationSharingNotification(roomId)
-            NotificationManagerCompat.from(this).notify(FOREGROUND_SERVICE_NOTIFICATION_ID, notification)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            Timber.w("Not allowed to notify.")
+        } else {
+            if (liveInfoSet.isNotEmpty()) {
+                val roomId = liveInfoSet.last().roomArgs.roomId
+                val notification = liveLocationNotificationBuilder.buildLiveLocationSharingNotification(roomId)
+                NotificationManagerCompat.from(this).notify(FOREGROUND_SERVICE_NOTIFICATION_ID, notification)
+            }
         }
     }
 

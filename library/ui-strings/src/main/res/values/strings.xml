@@ -120,6 +120,7 @@
     <string name="notice_widget_modified">%1$s modified %2$s widget</string>
     <string name="notice_widget_modified_by_you">You modified %1$s widget</string>
 
+    <string name="power_level_owner">Owner</string>
     <string name="power_level_admin">Admin</string>
     <string name="power_level_moderator">Moderator</string>
     <string name="power_level_default">Default</string>
@@ -461,7 +462,7 @@
     <string name="home_layout_preferences_sort_name">A - Z</string>
 
     <string name="labs_enable_new_app_layout_title">Enable new layout</string>
-    <string name="labs_enable_new_app_layout_summary">A simplified SchildiChat with optional tabs</string>
+    <string name="labs_enable_new_app_layout_summary">A simplified KebabChat with optional tabs</string>
 
     <string name="labs_enable_deferred_dm_title">Enable deferred DMs</string>
     <string name="labs_enable_deferred_dm_summary">Create DM only on first message</string>
@@ -652,6 +653,8 @@
 
     <string name="call_remove_jitsi_widget_progress">Ending call…</string>
 
+    <string name="microphone_in_use_title">Microphone in use</string>
+
     <!-- permissions Android M -->
     <string name="permissions_rationale_popup_title">Information</string>
     <!-- Note to translators: the translation MUST contain the string "${app_name}", which will be replaced by the application name -->
@@ -683,6 +686,7 @@
     <string name="room_participants_leave_prompt_title">Leave room</string>
     <string name="room_participants_leave_prompt_msg">Are you sure you want to leave the room?</string>
     <string name="room_participants_leave_private_warning">This room is not public. You will not be able to rejoin without an invite.</string>
+    <string name="room_participants_leave_last_admin">You\'re the only admin of this room. Leaving it will mean no one has control over it.</string>
 
     <string name="room_participants_header_direct_chats">Direct Messages</string>
 
@@ -2132,7 +2136,7 @@
     <string name="login_server_url_form_modular_hint">Element Matrix Services Address</string>
     <string name="login_server_url_form_other_hint">Address</string>
     <string name="login_server_url_form_modular_text">Premium hosting for organisations</string>
-    <string name="login_server_url_form_modular_notice">Enter the address of the Modular SchildiChat or Server you want to use</string>
+    <string name="login_server_url_form_modular_notice">Enter the address of the Modular KebabChat or Server you want to use</string>
     <string name="login_server_url_form_common_notice">Enter the address of the server you want to use</string>
 
     <string name="login_sso_error_message">An error occurred when loading the page: %1$s (%2$d)</string>
@@ -2367,6 +2371,8 @@
     </plurals>
     <string name="room_profile_section_more_polls">Poll history</string>
     <string name="room_profile_section_more_uploads">Uploads</string>
+    <string name="room_profile_section_more_report">Report Room</string>
+    <string name="room_profile_section_more_report_success_content">The room has been successfully reported.</string>
     <string name="room_profile_section_more_leave">Leave Room</string>
     <string name="direct_room_profile_section_more_leave">Leave</string>
     <string name="room_profile_leaving_room">"Leaving the room…"</string>
@@ -2379,6 +2385,7 @@
     <string name="room_member_power_level_invites">Invites</string>
     <string name="room_member_power_level_users">Users</string>
 
+    <string name="room_member_power_level_owner_in">Owner in %1$s</string>
     <string name="room_member_power_level_admin_in">Admin in %1$s</string>
     <string name="room_member_power_level_moderator_in">Moderator in %1$s</string>
     <string name="room_member_power_level_default_in">Default in %1$s</string>
@@ -2820,7 +2827,7 @@
     <string name="notice_crypto_unable_to_decrypt_merged">Waiting for encryption history</string>
 
     <!-- TODO TO BE REMOVED -->
-    <string tools:ignore="UnusedResources" name="disclaimer_title">Riot is now SchildiChat!</string>
+    <string tools:ignore="UnusedResources" name="disclaimer_title">Riot is now KebabChat!</string>
     <!-- TODO TO BE REMOVED -->
     <string tools:ignore="UnusedResources" name="disclaimer_content">We’re excited to announce we’ve changed name! Your app is up to date and you’re signed in to your account.</string>
     <!-- TODO TO BE REMOVED -->
@@ -2936,6 +2943,9 @@
     <string name="call_transfer_unknown_person">Unknown person</string>
 
     <string name="call_slide_to_end_conference">Slide to end the call</string>
+
+    <string name="call_unsupported">Unsupported call</string>
+    <string name="call_unsupported_matrix_rtc_call">Unsupported call. The new KebabChat Next app is needed to join this call.</string>
 
     <string name="re_authentication_activity_title">Re-Authentication Needed</string>
     <!-- Note to translators: the translation MUST contain the string "${app_name}", which will be replaced by the application name -->
@@ -3636,4 +3646,10 @@
     <string name="pill_message_in_room">Message in %s</string>
     <string name="pill_message_in_unknown_room">Message in room</string>
     <string name="pill_message_unknown_room_or_space">Room/Space</string>
+
+    <string name="error_mas_not_supported_title">You can no longer create an account with %1$s using this app</string>
+    <string name="error_mas_not_supported_subtitle">Download %1$s to use %2$s for your account or choose a different homeserver.</string>
+    <string name="view_download_replacement_app_title">Download %1$s</string>
+    <string name="view_download_replacement_app_subtitle">Faster, more secure, and packed with powerful collaboration tools.</string>
+
 </resources>

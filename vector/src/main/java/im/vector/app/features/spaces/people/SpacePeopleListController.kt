@@ -1,17 +1,8 @@
 /*
- * Copyright (c) 2021 New Vector Ltd
+ * Copyright 2021-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.spaces.people
@@ -63,7 +54,7 @@ class SpacePeopleListController @Inject constructor(
         memberSummaries.forEach { memberEntry ->
 
             val filtered = memberEntry.second
-                    .filter { roomMemberSummaryFilter.test(it.roomMemberSummary) }
+                    .filter { roomMemberSummaryFilter.test(it.summary) }
             if (filtered.isNotEmpty()) {
                 dividerItem {
                     id("divider_type_${memberEntry.first.titleRes}")
@@ -72,13 +63,12 @@ class SpacePeopleListController @Inject constructor(
             foundCount += filtered.size
             filtered
                     .join(
-                            each = { _, roomMemberWrapper ->
-                                val roomMember = roomMemberWrapper.roomMemberSummary
+                            each = { _, roomMember ->
                                 profileMatrixItemWithPowerLevel {
-                                    id(roomMember.userId)
-                                    matrixItem(roomMember.toMatrixItem())
+                                    id(roomMember.summary.userId)
+                                    matrixItem(roomMember.summary.toMatrixItem())
                                     avatarRenderer(host.avatarRenderer)
-                                    userVerificationLevel(data.trustLevelMap.invoke()?.get(roomMember.userId))
+                                    userVerificationLevel(data.trustLevelMap.invoke()?.get(roomMember.summary.userId))
                                             .apply {
                                                 val pl = host.toPowerLevelLabel(memberEntry.first)
                                                 if (memberEntry.first == RoomMemberListCategories.INVITE) {
@@ -116,13 +106,13 @@ class SpacePeopleListController @Inject constructor(
                                             }
 
                                     clickListener {
-                                        host.listener?.onSpaceMemberClicked(roomMember)
+                                        host.listener?.onSpaceMemberClicked(roomMember.summary)
                                     }
                                 }
                             },
                             between = { _, roomMemberBefore ->
                                 dividerItem {
-                                    id("divider_${roomMemberBefore.roomMemberSummary.userId}")
+                                    id("divider_${roomMemberBefore.summary.userId}")
                                 }
                             }
                     )

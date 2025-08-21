@@ -1,27 +1,21 @@
 /*
+ * Copyright 2020-2024 New Vector Ltd.
  * Copyright 2019 New Vector Ltd
- * Copyright 2020 New Vector Ltd
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.core.services
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Binder
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.media.session.MediaButtonReceiver
@@ -31,6 +25,7 @@ import im.vector.app.core.extensions.singletonEntryPoint
 import im.vector.app.core.extensions.startForegroundCompat
 import im.vector.app.features.call.CallArgs
 import im.vector.app.features.call.VectorCallActivity
+import im.vector.app.features.call.audio.MicrophoneAccessService
 import im.vector.app.features.call.telecom.CallConnection
 import im.vector.app.features.call.webrtc.WebRtcCall
 import im.vector.app.features.call.webrtc.WebRtcCallManager
@@ -158,7 +153,8 @@ class CallAndroidService : VectorAndroidService() {
         val isVideoCall = call.mxCall.isVideoCall
         val fromBg = intent.getBooleanExtra(EXTRA_IS_IN_BG, false)
         Timber.tag(loggerTag.value).v("displayIncomingCallNotification : display the dedicated notification")
-        val incomingCallAlert = IncomingCallAlert(callId,
+        val incomingCallAlert = IncomingCallAlert(
+                callId,
                 shouldBeDisplayedIn = { activity ->
                     if (activity is VectorCallActivity) {
                         activity.intent.getParcelableExtraCompat<CallArgs>(Mavericks.KEY_ARG)?.callId != call.callId
@@ -184,7 +180,11 @@ class CallAndroidService : VectorAndroidService() {
         if (knownCalls.isEmpty()) {
             startForegroundCompat(callId.hashCode(), notification)
         } else {
-            notificationManager.notify(callId.hashCode(), notification)
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                Timber.w("Not allowed to notify.")
+            } else {
+                notificationManager.notify(callId.hashCode(), notification)
+            }
         }
         knownCalls[callId] = callInformation
     }
@@ -208,6 +208,9 @@ class CallAndroidService : VectorAndroidService() {
             stopForegroundCompat()
             mediaSession?.isActive = false
             myStopSelf()
+
+            // Also stop the microphone service if it is running
+            stopService(Intent(this, MicrophoneAccessService::class.java))
         }
         val wasConnected = connectedCallIds.remove(callId)
         if (!wasConnected && !terminatedCall.isOutgoing && !rejected && endCallReason != EndCallReason.ANSWERED_ELSEWHERE) {
@@ -239,7 +242,11 @@ class CallAndroidService : VectorAndroidService() {
         if (knownCalls.isEmpty()) {
             startForegroundCompat(callId.hashCode(), notification)
         } else {
-            notificationManager.notify(callId.hashCode(), notification)
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                Timber.w("Not allowed to notify.")
+            } else {
+                notificationManager.notify(callId.hashCode(), notification)
+            }
         }
         knownCalls[callId] = callInformation
     }
@@ -263,7 +270,11 @@ class CallAndroidService : VectorAndroidService() {
         if (knownCalls.isEmpty()) {
             startForegroundCompat(callId.hashCode(), notification)
         } else {
-            notificationManager.notify(callId.hashCode(), notification)
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                Timber.w("Not allowed to notify.")
+            } else {
+                notificationManager.notify(callId.hashCode(), notification)
+            }
         }
         knownCalls[callId] = callInformation
     }

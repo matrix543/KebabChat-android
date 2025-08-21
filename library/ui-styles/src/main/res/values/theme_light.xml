@@ -55,8 +55,18 @@
         <item name="vctr_list_separator_on_surface">?vctr_system</item>
         <item name="vctr_unread_background">?vctr_notice_secondary</item>
 
+        <!-- Other colors -->
+        <item name="vctr_bg_critical_subtle" >@color/vctr_bg_critical_subtle_light</item>
+        <item name="vctr_border_critical_subtle" >@color/vctr_border_critical_subtle_light</item>
+        <item name= "vctr_icon_critical_primary" >@color/vctr_icon_critical_primary_light</item>
+        <item name= "vctr_text_critical_primary" >@color/vctr_text_critical_primary_light</item>
+        <item name= "vctr_text_primary" >@color/vctr_text_primary_light</item>
+
         <!-- Material color -->
         <item name="colorPrimary">@color/element_accent_light</item>
+        <!-- Fix background color of status bar in home and room detail activity -->
+        <!--item name="colorPrimaryDark">@color/element_background_light</item-->
+        <item name="colorPrimaryDark">?vctr_toolbar_background</item>
         <item name="colorPrimaryVariant">@color/element_accent_light</item>
         <item name="colorOnPrimary">@android:color/white</item>
         <item name="colorSecondary">@color/element_accent_light</item>

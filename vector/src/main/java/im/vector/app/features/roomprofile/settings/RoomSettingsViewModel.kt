@@ -1,17 +1,8 @@
 /*
- * Copyright 2020 New Vector Ltd
+ * Copyright 2020-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.roomprofile.settings
@@ -24,7 +15,6 @@ import dagger.assisted.AssistedInject
 import im.vector.app.core.di.MavericksAssistedViewModelFactory
 import im.vector.app.core.di.hiltMavericksViewModelFactory
 import im.vector.app.core.platform.VectorViewModel
-import im.vector.app.features.powerlevel.PowerLevelsFlowFactory
 import im.vector.app.features.settings.VectorPreferences
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapNotNull
@@ -41,7 +31,6 @@ import org.matrix.android.sdk.api.session.room.model.RoomAvatarContent
 import org.matrix.android.sdk.api.session.room.model.RoomGuestAccessContent
 import org.matrix.android.sdk.api.session.room.model.RoomHistoryVisibilityContent
 import org.matrix.android.sdk.api.session.room.model.RoomJoinRulesContent
-import org.matrix.android.sdk.api.session.room.powerlevels.PowerLevelsHelper
 import org.matrix.android.sdk.flow.flow
 import org.matrix.android.sdk.flow.mapOptional
 import org.matrix.android.sdk.flow.unwrap
@@ -124,28 +113,26 @@ class RoomSettingsViewModel @AssistedInject constructor(
                     )
                 }
 
-        val powerLevelsContentLive = PowerLevelsFlowFactory(room).createFlow()
-
-        powerLevelsContentLive
-                .onEach {
-                    val powerLevelsHelper = PowerLevelsHelper(it)
+        val powerLevelsFlow = room.flow().liveRoomPowerLevels()
+        powerLevelsFlow
+                .onEach { roomPowerLevels ->
                     val permissions = RoomSettingsViewState.ActionPermissions(
-                            canChangeAvatar = powerLevelsHelper.isUserAllowedToSend(session.myUserId, true, EventType.STATE_ROOM_AVATAR),
-                            canChangeName = powerLevelsHelper.isUserAllowedToSend(session.myUserId, true, EventType.STATE_ROOM_NAME),
-                            canChangeTopic = powerLevelsHelper.isUserAllowedToSend(session.myUserId, true, EventType.STATE_ROOM_TOPIC),
-                            canChangeHistoryVisibility = powerLevelsHelper.isUserAllowedToSend(
+                            canChangeAvatar = roomPowerLevels.isUserAllowedToSend(session.myUserId, true, EventType.STATE_ROOM_AVATAR),
+                            canChangeName = roomPowerLevels.isUserAllowedToSend(session.myUserId, true, EventType.STATE_ROOM_NAME),
+                            canChangeTopic = roomPowerLevels.isUserAllowedToSend(session.myUserId, true, EventType.STATE_ROOM_TOPIC),
+                            canChangeHistoryVisibility = roomPowerLevels.isUserAllowedToSend(
                                     session.myUserId, true,
                                     EventType.STATE_ROOM_HISTORY_VISIBILITY
                             ),
-                            canChangeJoinRule = powerLevelsHelper.isUserAllowedToSend(
+                            canChangeJoinRule = roomPowerLevels.isUserAllowedToSend(
                                     session.myUserId, true,
                                     EventType.STATE_ROOM_JOIN_RULES
                             ) &&
-                                    powerLevelsHelper.isUserAllowedToSend(
+                                    roomPowerLevels.isUserAllowedToSend(
                                             session.myUserId, true,
                                             EventType.STATE_ROOM_GUEST_ACCESS
                                     ),
-                            canAddChildren = powerLevelsHelper.isUserAllowedToSend(
+                            canAddChildren = roomPowerLevels.isUserAllowedToSend(
                                     session.myUserId, true,
                                     EventType.STATE_SPACE_CHILD
                             )

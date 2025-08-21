@@ -1,18 +1,9 @@
 /*
- * Copyright (c) 2020 New Vector Ltd
- * Copyright (C) 2018 stfalcon.com
+ * Copyright 2020-2024 New Vector Ltd.
+ * Copyright 2018 stfalcon.com
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.lib.attachmentviewer
@@ -140,12 +131,15 @@ abstract class AttachmentViewerActivity : AppCompatActivity(), AttachmentEventLi
         // the touch coordinates
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // New API instead of SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN and SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            @Suppress("DEPRECATION")
             window.setDecorFitsSystemWindows(false)
             // New API instead of SYSTEM_UI_FLAG_IMMERSIVE
             window.decorView.windowInsetsController?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             // New API instead of FLAG_TRANSLUCENT_STATUS
+            @Suppress("DEPRECATION")
             window.statusBarColor = ContextCompat.getColor(this, R.color.half_transparent_status_bar)
             // new API instead of FLAG_TRANSLUCENT_NAVIGATION
+            @Suppress("DEPRECATION")
             window.navigationBarColor = ContextCompat.getColor(this, R.color.half_transparent_status_bar)
         } else {
             @Suppress("DEPRECATION")
@@ -327,6 +321,7 @@ abstract class AttachmentViewerActivity : AppCompatActivity(), AttachmentEventLi
     protected open fun shouldAnimateDismiss(): Boolean = true
 
     protected open fun animateClose() {
+        @Suppress("DEPRECATION")
         window.statusBarColor = Color.TRANSPARENT
         finish()
     }
@@ -343,14 +338,17 @@ abstract class AttachmentViewerActivity : AppCompatActivity(), AttachmentEventLi
         // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // New API instead of SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN and SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            @Suppress("DEPRECATION")
             window.setDecorFitsSystemWindows(false)
             // new API instead of SYSTEM_UI_FLAG_HIDE_NAVIGATION
             window.decorView.windowInsetsController?.hide(WindowInsets.Type.navigationBars())
             // New API instead of SYSTEM_UI_FLAG_IMMERSIVE
             window.decorView.windowInsetsController?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             // New API instead of FLAG_TRANSLUCENT_STATUS
+            @Suppress("DEPRECATION")
             window.statusBarColor = ContextCompat.getColor(this, R.color.half_transparent_status_bar)
             // New API instead of FLAG_TRANSLUCENT_NAVIGATION
+            @Suppress("DEPRECATION")
             window.navigationBarColor = ContextCompat.getColor(this, R.color.half_transparent_status_bar)
         } else {
             @Suppress("DEPRECATION")
@@ -372,6 +370,7 @@ abstract class AttachmentViewerActivity : AppCompatActivity(), AttachmentEventLi
         systemUiVisibility = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // New API instead of SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN and SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            @Suppress("DEPRECATION")
             window.setDecorFitsSystemWindows(false)
         } else {
             @Suppress("DEPRECATION")

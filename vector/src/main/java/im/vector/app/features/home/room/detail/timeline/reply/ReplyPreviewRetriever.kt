@@ -39,7 +39,7 @@ import org.matrix.android.sdk.api.session.crypto.model.OlmDecryptionResult
 import org.matrix.android.sdk.api.session.events.model.getRelationContent
 import org.matrix.android.sdk.api.session.getRoom
 import org.matrix.android.sdk.api.session.room.getTimelineEvent
-import org.matrix.android.sdk.api.session.room.powerlevels.PowerLevelsHelper
+import org.matrix.android.sdk.api.session.room.powerlevels.RoomPowerLevels
 import org.matrix.android.sdk.api.session.room.sender.SenderInfo
 import org.matrix.android.sdk.api.session.room.timeline.TimelineEvent
 import org.matrix.android.sdk.api.session.room.timeline.getLatestEventId
@@ -253,7 +253,7 @@ class ReplyPreviewRetriever(
         fun onStateUpdated(state: PreviewReplyUiState)
     }
     interface PowerLevelProvider {
-        fun getPowerLevelsHelper(): PowerLevelsHelper?
+        fun getPowerLevels(): RoomPowerLevels?
     }
 
     fun getMemberNameColor(event: TimelineEvent, roomInformationData: MessageInformationData): Int {
@@ -263,7 +263,7 @@ class ReplyPreviewRetriever(
                 MatrixItemColorProvider.UserInRoomInformation(
                         roomInformationData.isDirect,
                         roomInformationData.isPublic,
-                        powerLevelProvider.getPowerLevelsHelper()?.getUserPowerLevelValue(event.senderInfo.userId)
+                        powerLevelProvider.getPowerLevels()?.getUserPowerLevel(event.senderInfo.userId)
                 )
         )
     }

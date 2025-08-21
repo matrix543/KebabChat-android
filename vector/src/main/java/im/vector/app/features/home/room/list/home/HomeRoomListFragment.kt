@@ -1,17 +1,8 @@
 /*
- * Copyright (c) 2022 New Vector Ltd
+ * Copyright 2022-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.home.room.list.home
@@ -27,7 +18,6 @@ import androidx.recyclerview.widget.ConcatAdapter.Config.StableIdMode
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.epoxy.OnModelBuildFinishedListener
 import com.airbnb.mvrx.fragmentViewModel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.core.epoxy.LayoutManagerStateRestorer
 import im.vector.app.core.extensions.cleanup
@@ -45,7 +35,7 @@ import im.vector.app.features.home.room.list.actions.RoomListQuickActionsSharedA
 import im.vector.app.features.home.room.list.home.header.HomeRoomFilter
 import im.vector.app.features.home.room.list.home.header.HomeRoomsHeadersController
 import im.vector.app.features.home.room.list.home.invites.InvitesActivity
-import im.vector.lib.strings.CommonStrings
+import im.vector.app.features.room.LeaveRoomPrompt
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.matrix.android.sdk.api.session.room.model.RoomSummary
@@ -112,7 +102,7 @@ class HomeRoomListFragment :
         }
     }
 
-    private fun handleQuickActions(quickAction: RoomListQuickActionsSharedAction) {
+    private suspend fun handleQuickActions(quickAction: RoomListQuickActionsSharedAction) {
         when (quickAction) {
             is RoomListQuickActionsSharedAction.NotificationsAllNoisy -> {
                 roomListViewModel.handle(HomeRoomListAction.ChangeRoomNotificationState(quickAction.roomId, RoomNotificationState.ALL_MESSAGES_NOISY))
@@ -207,26 +197,11 @@ class HomeRoomListFragment :
         concatAdapter.addAdapter(roomsAdapter)
     }
 
-    private fun promptLeaveRoom(roomId: String) {
-        val isPublicRoom = roomListViewModel.isPublicRoom(roomId)
-        val message = buildString {
-            append(getString(CommonStrings.room_participants_leave_prompt_msg))
-            if (!isPublicRoom) {
-                append("\n\n")
-                append(getString(CommonStrings.room_participants_leave_private_warning))
-            }
+    private suspend fun promptLeaveRoom(roomId: String) {
+        val warning = roomListViewModel.getLeaveRoomWarning(roomId)
+        LeaveRoomPrompt.show(requireContext(), warning) {
+            roomListViewModel.handle(HomeRoomListAction.LeaveRoom(roomId))
         }
-        MaterialAlertDialogBuilder(
-                requireContext(),
-                if (isPublicRoom) 0 else im.vector.lib.ui.styles.R.style.ThemeOverlay_Vector_MaterialAlertDialog_Destructive
-        )
-                .setTitle(CommonStrings.room_participants_leave_prompt_title)
-                .setMessage(message)
-                .setPositiveButton(CommonStrings.action_leave) { _, _ ->
-                    roomListViewModel.handle(HomeRoomListAction.LeaveRoom(roomId))
-                }
-                .setNegativeButton(CommonStrings.action_cancel, null)
-                .show()
     }
 
     private fun onInvitesCounterClicked() {

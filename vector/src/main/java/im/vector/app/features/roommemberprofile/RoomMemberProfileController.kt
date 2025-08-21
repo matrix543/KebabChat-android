@@ -1,18 +1,8 @@
 /*
- * Copyright 2020 New Vector Ltd
+ * Copyright 2020-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.roommemberprofile
@@ -29,8 +19,7 @@ import im.vector.lib.core.utils.epoxy.charsequence.toEpoxyCharSequence
 import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.session.Session
 import org.matrix.android.sdk.api.session.room.model.Membership
-import org.matrix.android.sdk.api.session.room.powerlevels.PowerLevelsHelper
-import org.matrix.android.sdk.api.session.room.powerlevels.Role
+import org.matrix.android.sdk.api.session.room.powerlevels.UserPowerLevel
 import javax.inject.Inject
 
 class RoomMemberProfileController @Inject constructor(
@@ -52,7 +41,7 @@ class RoomMemberProfileController @Inject constructor(
         fun onOverrideColorClicked()
         fun onJumpToReadReceiptClicked()
         fun onMentionClicked()
-        fun onEditPowerLevel(currentRole: Role)
+        fun onEditPowerLevel(userPowerLevel: UserPowerLevel.Value)
         fun onKickClicked(isSpace: Boolean)
         fun onBanClicked(isSpace: Boolean, isUserBanned: Boolean)
         fun onCancelInviteClicked()
@@ -261,14 +250,14 @@ class RoomMemberProfileController @Inject constructor(
     }
 
     private fun buildAdminSection(state: RoomMemberProfileViewState) {
-        val powerLevelsContent = state.powerLevelsContent ?: return
         val powerLevelsStr = state.userPowerLevelString() ?: return
-        val powerLevelsHelper = PowerLevelsHelper(powerLevelsContent)
-        val userPowerLevel = powerLevelsHelper.getUserRole(state.userId)
-        val myPowerLevel = powerLevelsHelper.getUserRole(session.myUserId)
+        val roomPowerLevels = state.roomPowerLevels ?: return
+        val userPowerLevel = roomPowerLevels.getUserPowerLevel(state.userId)
+        val myPowerLevel = roomPowerLevels.getUserPowerLevel(session.myUserId)
         if ((!state.isMine && myPowerLevel <= userPowerLevel)) {
             return
         }
+        if (userPowerLevel !is UserPowerLevel.Value) return
         val membership = state.asyncMembership() ?: return
         val canKick = !state.isMine && state.actionPermissions.canKick
         val canBan = !state.isMine && state.actionPermissions.canBan

@@ -1,8 +1,98 @@
+Changes in Element v1.6.44 (2025-08-06)
+=======================================
+
+Other changes
+-------------
+ - Hide the "Manually Verify by Text" option behind devtool flag. ([#9058](https://github.com/element-hq/element-android/issues/9058))
+ - Change targetSdk to 35. ([#9051](https://github.com/element-hq/element-android/issues/9051))
+ - Support room v12. ([#9065](https://github.com/element-hq/element-android/issues/9065))
+ - Fix window insets. ([#9067](https://github.com/element-hq/element-android/issues/9067))
+
+
+Changes in Element v1.6.42 (2025-06-10)
+=======================================
+
+- Bump org.matrix.rustcomponents:crypto-android to 0.11.1 ([#9043](https://github.com/element-hq/element-android/pull/9043))
+
+
+Changes in Element v1.6.40 (2025-06-02)
+=======================================
+
+- Bump org.matrix.rustcomponents:crypto-android to 0.11.0 ([#9036](https://github.com/element-hq/element-android/pull/9036))
+
+Changes in Element v1.6.38 (2025-05-27)
+=======================================
+
+Other changes
+-------------
+ - Filter mobile links: only open links which have an explicit empty path like `https://mobile.element.io/?hs_url=...` ([#9033](https://github.com/element-hq/element-android/issues/9033))
+
+
+Changes in Element v1.6.36 (2025-03-14)
+=======================================
+
+No significant changes.
+
+
+Changes in Element v1.6.34 (2025-03-07)
+=======================================
+
+Security fixes 🔐
+-----------------
+- Fix for [GHSA-632v-9pm3-m8ch](https://github.com/element-hq/element-android/security/advisories/GHSA-632v-9pm3-m8ch) / [CVE-2025-27606](https://www.cve.org/CVERecord?id=CVE-2025-27606)
+
+Changes in Element v1.6.32 (2025-02-18)
+=======================================
+
+Other changes
+-------------
+ - Add action to report room. ([#8998](https://github.com/element-hq/element-android/issues/8998))
+
+
+Changes in Element v1.6.30 (2025-02-04)
+=======================================
+
+Dual licensing: AGPL + Element Commercial  ([#8990](https://github.com/element-hq/element-android/issues/8990))
+
+Bugfixes 🐛
+----------
+ - Fix incoming call crash on Android 14+. ([#8964](https://github.com/element-hq/element-android/issues/8964))
+
+
+Changes in Element v1.6.28 (2025-01-13)
+=======================================
+
+- Start sunsetting the application: prevent creation of new accounts on server with MAS support, and redirect users to Element X. ([#8983](https://github.com/element-hq/element-android/pull/8983))
+- Sync strings. ([#8986](https://github.com/element-hq/element-android/pull/8986))
+
+
+Changes in Element v1.6.26 (2024-12-20)
+=======================================
+
+Other changes
+-------------
+ - Bump org.matrix.rustcomponents:crypto-android from 0.5.0 to 0.6.0 based on matrix-sdk-crypto-0.9.0 ([#8960](https://github.com/element-hq/element-android/issues/8960))
+
+
+Changes in Element v1.6.24 (2024-11-19)
+=======================================
+
+Bugfixes 🐛
+----------
+ - Extended file name support to include characters from multiple languages, including Cyrillic and Han scripts. ([#6449](https://github.com/element-hq/element-android/issues/6449)) ([#6449](https://github.com/element-hq/element-android/issues/6449))
+ - Intercept mobile.element.io links with Element app ([#8904](https://github.com/element-hq/element-android/issues/8904))
+ - Show a notice when a previously verified user is not anymore ([#8933](https://github.com/element-hq/element-android/issues/8933))
+
+Other changes
+-------------
+ - Indicate when calls are unsupported in the timeline/notifications ([#8938](https://github.com/element-hq/element-android/issues/8938))
+
+
 Changes in Element v1.6.22 (2024-09-23)
 =======================================
 
 Important: this version removes the dependency of the deprecated libolm library.
-Application installations that have not been updated to the first version with the migration (1.6.3 release at 2023-06-27) will not be able to migrate the account.
+Application installations that have not been updated to the first version with the migration (v1.6.0 released at 2023-05-17) will not be able to migrate the account.
 More details in ([#8901](https://github.com/element-hq/element-android/issues/8901))
 
 Other changes

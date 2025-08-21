@@ -1,17 +1,8 @@
 /*
- * Copyright (c) 2020 New Vector Ltd
+ * Copyright 2020-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.roommemberprofile.powerlevel
@@ -26,8 +17,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import im.vector.app.R
 import im.vector.app.core.extensions.hideKeyboard
 import im.vector.app.databinding.DialogEditPowerLevelBinding
+import im.vector.app.features.powerlevel.isOwner
 import im.vector.lib.strings.CommonStrings
 import org.matrix.android.sdk.api.session.room.powerlevels.Role
+import org.matrix.android.sdk.api.session.room.powerlevels.UserPowerLevel
 
 object EditPowerLevelDialogs {
 
@@ -35,46 +28,45 @@ object EditPowerLevelDialogs {
     fun showChoice(
             activity: Activity,
             @StringRes titleRes: Int,
-            currentRole: Role,
-            listener: (Int) -> Unit
+            currentPowerLevel: UserPowerLevel.Value,
+            listener: (UserPowerLevel.Value) -> Unit
     ) {
         val dialogLayout = activity.layoutInflater.inflate(R.layout.dialog_edit_power_level, null)
         val views = DialogEditPowerLevelBinding.bind(dialogLayout)
-        views.powerLevelRadioGroup.setOnCheckedChangeListener { _, checkedId ->
-            views.powerLevelCustomEditLayout.isVisible = checkedId == R.id.powerLevelCustomRadio
-        }
-        views.powerLevelCustomEdit.setText("${currentRole.value}")
-
+        val currentRole = Role.getSuggestedRole(currentPowerLevel)
         when (currentRole) {
+            Role.Creator,
+            Role.SuperAdmin -> views.powerLevelOwnerRadio.isChecked = true
             Role.Admin -> views.powerLevelAdminRadio.isChecked = true
             Role.Moderator -> views.powerLevelModeratorRadio.isChecked = true
-            Role.Default -> views.powerLevelDefaultRadio.isChecked = true
-            else -> views.powerLevelCustomRadio.isChecked = true
+            Role.User -> views.powerLevelDefaultRadio.isChecked = true
         }
-
+        views.powerLevelOwnerRadio.isVisible = currentRole.isOwner()
         MaterialAlertDialogBuilder(activity)
                 .setTitle(titleRes)
                 .setView(dialogLayout)
                 .setPositiveButton(CommonStrings.edit) { _, _ ->
                     val newValue = when (views.powerLevelRadioGroup.checkedRadioButtonId) {
-                        R.id.powerLevelAdminRadio -> Role.Admin.value
-                        R.id.powerLevelModeratorRadio -> Role.Moderator.value
-                        R.id.powerLevelDefaultRadio -> Role.Default.value
-                        else -> {
-                            views.powerLevelCustomEdit.text?.toString()?.toInt() ?: currentRole.value
-                        }
+                        R.id.powerLevelOwnerRadio -> UserPowerLevel.SuperAdmin
+                        R.id.powerLevelAdminRadio -> UserPowerLevel.Admin
+                        R.id.powerLevelModeratorRadio -> UserPowerLevel.Moderator
+                        R.id.powerLevelDefaultRadio -> UserPowerLevel.User
+                        else -> null
                     }
-                    listener(newValue)
+                    if (newValue != null) {
+                        listener(newValue)
+                    }
                 }
                 .setNegativeButton(CommonStrings.action_cancel, null)
-                .setOnKeyListener(DialogInterface.OnKeyListener
-                { dialog, keyCode, event ->
-                    if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                        dialog.cancel()
-                        return@OnKeyListener true
-                    }
-                    false
-                })
+                .setOnKeyListener(
+                        DialogInterface.OnKeyListener
+                        { dialog, keyCode, event ->
+                            if (event.action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                                dialog.cancel()
+                                return@OnKeyListener true
+                            }
+                            false
+                        })
                 .setOnDismissListener {
                     dialogLayout.hideKeyboard()
                 }

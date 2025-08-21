@@ -1,17 +1,8 @@
 /*
- * Copyright 2019 New Vector Ltd
+ * Copyright 2019-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.lifecycle
@@ -41,7 +32,7 @@ class VectorActivityLifecycleCallbacks constructor(private val popupAlertManager
     /**
      * The activities information collected from the app manifest.
      */
-    private var activitiesInfo: Array<ActivityInfo> = emptyArray()
+    private var activitiesInfo: List<ActivityInfo>? = null
 
     private val coroutineScope = CoroutineScope(SupervisorJob())
 
@@ -60,24 +51,32 @@ class VectorActivityLifecycleCallbacks constructor(private val popupAlertManager
     override fun onActivityStopped(activity: Activity) {}
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        if (activitiesInfo.isEmpty()) {
+        if (activitiesInfo == null) {
             val context = activity.applicationContext
             val packageManager: PackageManager = context.packageManager
 
             // Get all activities from element android
-            activitiesInfo = packageManager.getPackageInfoCompat(context.packageName, PackageManager.GET_ACTIVITIES).activities
-
+            val activities = packageManager
+                    .getPackageInfoCompat(context.packageName, PackageManager.GET_ACTIVITIES)
+                    .activities
+                    .orEmpty()
+                    .toList()
             // Get all activities from PermissionController module
             // See https://source.android.com/docs/core/architecture/modular-system/permissioncontroller#package-format
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S_V2) {
-                activitiesInfo += tryOrNull {
+            val otherActivities = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S_V2) {
+                (tryOrNull {
                     packageManager.getPackageInfoCompat("com.google.android.permissioncontroller", PackageManager.GET_ACTIVITIES).activities
                 } ?: tryOrNull {
                     packageManager.getModuleInfo("com.google.android.permission", 1).packageName?.let {
                         packageManager.getPackageInfoCompat(it, PackageManager.GET_ACTIVITIES or PackageManager.MATCH_APEX).activities
                     }
-                }.orEmpty()
+                })
+                        .orEmpty()
+                        .toList()
+            } else {
+                emptyList()
             }
+            activitiesInfo = activities + otherActivities
         }
 
         // restart the app if the task contains an unknown activity
@@ -101,7 +100,10 @@ class VectorActivityLifecycleCallbacks constructor(private val popupAlertManager
 
             if (isTaskCorrupted) {
                 Timber.e("Application is potentially corrupted by an unknown activity")
-                MainActivity.restartApp(activity, MainActivityArgs())
+                // NOTE: this also kills us when we request notification permissions!
+                // Logs say: E SC_NP_DBG: Found potential malicious activity: com.android.permissioncontroller.permission.ui.GrantPermissionsActivity vs im.vector.app.features.debug.TestLinkifyActivity, ...
+                // We *could* whitelist com.android.permissioncontroller and com.google.android.permissioncontroller via activity.packageName, but how can we know that other OS'es don't have their own?
+                //MainActivity.restartApp(activity, MainActivityArgs())
                 return@launch
             }
         }
@@ -153,5 +155,7 @@ class VectorActivityLifecycleCallbacks constructor(private val popupAlertManager
      * @param activity the activity of the task
      * @return true if the activity is potentially malicious
      */
-    private fun isPotentialMaliciousActivity(activity: ComponentName): Boolean = activitiesInfo.none { it.name == activity.className }
+    private fun isPotentialMaliciousActivity(activity: ComponentName): Boolean = activitiesInfo.orEmpty().none { it.name == activity.className }.also {
+            Timber.tag("SC_NP_DBG").e("Found potential malicious activity: ${activity.className} (${activity.packageName}) vs ${activitiesInfo?.joinToString { it.name }}")
+        }
 }

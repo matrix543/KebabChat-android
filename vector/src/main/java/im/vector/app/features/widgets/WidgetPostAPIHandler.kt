@@ -1,17 +1,8 @@
 /*
- * Copyright (c) 2020 New Vector Ltd
+ * Copyright 2020-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.widgets
@@ -32,12 +23,10 @@ import org.matrix.android.sdk.api.session.events.model.Content
 import org.matrix.android.sdk.api.session.events.model.Event
 import org.matrix.android.sdk.api.session.events.model.EventType
 import org.matrix.android.sdk.api.session.events.model.toContent
-import org.matrix.android.sdk.api.session.events.model.toModel
 import org.matrix.android.sdk.api.session.getRoom
+import org.matrix.android.sdk.api.session.room.getRoomPowerLevels
 import org.matrix.android.sdk.api.session.room.getStateEvent
 import org.matrix.android.sdk.api.session.room.model.Membership
-import org.matrix.android.sdk.api.session.room.model.PowerLevelsContent
-import org.matrix.android.sdk.api.session.room.powerlevels.PowerLevelsHelper
 import org.matrix.android.sdk.api.session.widgets.WidgetPostAPIMediator
 import org.matrix.android.sdk.api.util.JsonDict
 import timber.log.Timber
@@ -155,13 +144,8 @@ class WidgetPostAPIHandler @AssistedInject constructor(
 
         Timber.d("## canSendEvent() : eventType $eventType isState $isState")
 
-        val powerLevelsEvent = room.getStateEvent(EventType.STATE_ROOM_POWER_LEVELS, QueryStringValue.IsEmpty)
-        val powerLevelsContent = powerLevelsEvent?.content?.toModel<PowerLevelsContent>()
-        val canSend = if (powerLevelsContent == null) {
-            false
-        } else {
-            PowerLevelsHelper(powerLevelsContent).isUserAllowedToSend(session.myUserId, isState, eventType)
-        }
+        val roomPowerLevels = room.getRoomPowerLevels()
+        val canSend = roomPowerLevels.isUserAllowedToSend(session.myUserId, isState, eventType)
         if (canSend) {
             Timber.d("## canSendEvent() returns true")
             widgetPostAPIMediator.sendBoolResponse(true, eventData)

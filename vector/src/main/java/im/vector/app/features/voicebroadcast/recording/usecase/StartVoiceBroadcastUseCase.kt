@@ -1,17 +1,8 @@
 /*
- * Copyright (c) 2022 New Vector Ltd
+ * Copyright 2022-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.voicebroadcast.recording.usecase
@@ -34,18 +25,13 @@ import im.vector.lib.multipicker.utils.toMultiPickerAudioType
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
-import org.matrix.android.sdk.api.query.QueryStringValue
 import org.matrix.android.sdk.api.session.Session
-import org.matrix.android.sdk.api.session.events.model.EventType
 import org.matrix.android.sdk.api.session.events.model.RelationType
 import org.matrix.android.sdk.api.session.events.model.toContent
-import org.matrix.android.sdk.api.session.events.model.toModel
 import org.matrix.android.sdk.api.session.getRoom
 import org.matrix.android.sdk.api.session.room.Room
-import org.matrix.android.sdk.api.session.room.getStateEvent
-import org.matrix.android.sdk.api.session.room.model.PowerLevelsContent
+import org.matrix.android.sdk.api.session.room.getRoomPowerLevels
 import org.matrix.android.sdk.api.session.room.model.relation.RelationDefaultContent
-import org.matrix.android.sdk.api.session.room.powerlevels.PowerLevelsHelper
 import org.matrix.android.sdk.flow.flow
 import org.matrix.android.sdk.flow.unwrap
 import timber.log.Timber
@@ -148,12 +134,8 @@ class StartVoiceBroadcastUseCase @Inject constructor(
 
     @VisibleForTesting
     fun assertHasEnoughPowerLevels(room: Room) {
-        val powerLevelsHelper = room.getStateEvent(EventType.STATE_ROOM_POWER_LEVELS, QueryStringValue.IsEmpty)
-                ?.content
-                ?.toModel<PowerLevelsContent>()
-                ?.let { PowerLevelsHelper(it) }
-
-        if (powerLevelsHelper?.isUserAllowedToSend(session.myUserId, true, VoiceBroadcastConstants.STATE_ROOM_VOICE_BROADCAST_INFO) != true) {
+        val roomPowerLevels = room.getRoomPowerLevels()
+        if (!roomPowerLevels.isUserAllowedToSend(session.myUserId, true, VoiceBroadcastConstants.STATE_ROOM_VOICE_BROADCAST_INFO)) {
             Timber.d("## StartVoiceBroadcastUseCase: Cannot start voice broadcast: no permission")
             throw VoiceBroadcastFailure.RecordingError.NoPermission
         }

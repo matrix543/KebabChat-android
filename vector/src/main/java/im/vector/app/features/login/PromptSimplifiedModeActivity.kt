@@ -19,6 +19,7 @@ package im.vector.app.features.login
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
 import im.vector.app.core.extensions.addFragment
 import im.vector.app.core.platform.VectorBaseActivity
@@ -34,6 +35,9 @@ open class PromptSimplifiedModeActivity : VectorBaseActivity<ActivityLoginBindin
     override fun initUiAndData() {
         addFragment(views.loginFragmentContainer, PromptSimplifiedModeFragment::class.java)
     }
+
+    override val rootView: View
+        get() = views.root
 
     companion object {
         fun showIfRequired(context: Context, vectorPreferences: VectorPreferences) {

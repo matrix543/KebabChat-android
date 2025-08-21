@@ -1,17 +1,8 @@
 /*
- * Copyright (c) 2021 New Vector Ltd
+ * Copyright 2021-2024 New Vector Ltd.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
+ * Please see LICENSE files in the repository root for full details.
  */
 
 package im.vector.app.features.roomprofile.permissions
@@ -28,8 +19,9 @@ class RoleFormatter @Inject constructor(
         return when (role) {
             Role.Admin -> stringProvider.getString(CommonStrings.power_level_admin)
             Role.Moderator -> stringProvider.getString(CommonStrings.power_level_moderator)
-            Role.Default -> stringProvider.getString(CommonStrings.power_level_default)
-            is Role.Custom -> stringProvider.getString(CommonStrings.power_level_custom, role.value)
+            Role.User -> stringProvider.getString(CommonStrings.power_level_default)
+            Role.Creator -> stringProvider.getString(CommonStrings.power_level_owner)
+            Role.SuperAdmin -> stringProvider.getString(CommonStrings.power_level_owner)
         }
     }
 }
