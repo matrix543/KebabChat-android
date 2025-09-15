@@ -151,7 +151,7 @@
     <string name="labs_enable_new_app_layout_summary_sc">Новий спрощений макет Element із додатковими вкладками</string>
     <string name="home_layout_preferences_sort_unread">Непрочитано</string>
     <string name="in_reply_to_error">Помилка завантаження відповідей повідомлення</string>
-    <string name="settings_enable_member_name_click">Натискаючі імена</string>
+    <string name="settings_enable_member_name_click">Клік по імені</string>
     <string name="settings_initial_sync_summary">Очистити кеш та заново завантажити з сервера</string>
     <string name="use_latest_app_sc">Використовуйте останню версію ${app_name_sc_stable} на інших ваших пристроях:</string>
     <string name="action_send_as_sticker">Відправити як наліпка</string>
@@ -167,4 +167,17 @@
     <string name="settings_integrations_scalar_warning">⚠️ Цей параметр за замовчуванням (якщо його не перевизначено конфігурацією вашого домашнього сервера) дає доступ до \"scalar\", менеджера інтеграції Element, який, на жаль, є пропрієтарним, тобто його вихідний код не відкритий і не може бути перевірений громадськістю чи розробниками SchildiChat.</string>
     <string name="settings_enable_member_name_click_summary">Натисніть на ім\'я користувача, щоб згадати його</string>
     <string name="settings_call_ringtone_use_default_stun_title">Дозволити резервний сервер підтримки дзвінків</string>
+    <string name="bubble_style_element">Елемент</string>
+    <string name="login_mobile_device_sc">SchildiChat Android</string>
+    <string name="bottom_action_all">Огляд</string>
+    <string name="footer_read_receipt_content_description">Стан повідомлення</string>
+    <string name="settings_space_pager_prefer_space_1">Надати перевагу нижньому кореневому простору</string>
+    <string name="settings_space_pager_prefer_space_1_summary">З пріоритетом показувати простори в нижній панелі, які ви перемістили вгору свого списку кореневих просторів</string>
+    <string name="settings_sc_dbg_show_display_index">Показувати displayIndex на часовій осі</string>
+    <string name="settings_sc_dbg_view_pager">Налагодження ViewPager</string>
+    <string name="settings_sc_dbg_view_pager_visuals">Показувати інформацію з налагодження ViewPager</string>
+    <string name="freeform_react_with">Відреагувати з \"%1$s\"</string>
+    <string name="freeform_reaction_summary">Реакція довільної форми</string>
+    <string name="settings_initial_sync">Початкова синхронізація</string>
+    <string name="app_desktop_web_sc">${app_name_sc_stable} Web\n${app_name_sc_stable} Desktop</string>
 </resources>
