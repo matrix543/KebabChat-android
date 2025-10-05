@@ -241,4 +241,10 @@
 
     <string name="settings_integrations_scalar_warning">⚠️ This setting by default (unless overridden by your homeserver\'s configuration) enables access to \"scalar\", Element\'s integration manager which is unfortunately proprietary, i.e. its source code is not open and can not be checked by the public or the SchildiChat developers.</string>
 
+    <string name="notification_channel_app_errors">Application errors</string>
+    <string name="notification_sync_service_failed_title">Cannot sync notifications</string>
+    <string name="notification_sync_service_failed_summary">Consider setting up UnifiedPush and disabling battery restrictions for SchildiChat in your system settings.</string>
+    <string name="notification_foreground_service_failed_title">Failed to start foreground service</string>
+    <string name="notification_foreground_service_failed_summary">You may need to exempt SchildiChat from battery restrictions in your system settings.</string>
+
 </resources>

@@ -101,6 +101,8 @@ class NotificationUtils @Inject constructor(
         const val SILENT_NOTIFICATION_CHANNEL_ID = "DEFAULT_SILENT_NOTIFICATION_CHANNEL_ID_V2"
         private const val CALL_NOTIFICATION_CHANNEL_ID = "CALL_NOTIFICATION_CHANNEL_ID_V2"
 
+        const val SC_APP_ERRORS_CHANNEL_ID = "SC_APP_ERRORS_CHANNEL_ID"
+
         @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.O)
         fun supportNotificationChannels() = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
 
@@ -206,6 +208,20 @@ class NotificationUtils @Inject constructor(
                             description = stringProvider.getString(CommonStrings.call)
                             setSound(null, null)
                             enableLights(true)
+                            lightColor = accentColor
+                        })
+
+        // SC
+        notificationManager.createNotificationChannel(
+                NotificationChannel(
+                        SC_APP_ERRORS_CHANNEL_ID,
+                        stringProvider.getString(CommonStrings.notification_channel_app_errors).ifEmpty { "Application errors" },
+                        NotificationManager.IMPORTANCE_DEFAULT
+                )
+                        .apply {
+                            description = stringProvider.getString(CommonStrings.notification_channel_app_errors)
+                            setSound(null, null)
+                            enableLights(false)
                             lightColor = accentColor
                         })
     }
