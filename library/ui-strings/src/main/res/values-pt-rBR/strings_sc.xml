@@ -180,4 +180,5 @@
     <string name="notification_sync_service_failed_summary">Considere configurar UnifiedPush e desabilitar restrições de bateria para o SchildiChat em suas configurações do sistema.</string>
     <string name="notification_channel_app_errors">Erros do aplicativo</string>
     <string name="notification_foreground_service_failed_summary">Você pode precisar excluir o SchildiChat de restrições de bateria nas suas configurações do sistema.</string>
+    <string name="notification_foreground_service_failed_title">Falha ao iniciar serviço em primeiro plano</string>
 </resources>
