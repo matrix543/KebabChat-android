@@ -176,4 +176,8 @@
     <string name="settings_call_ringtone_use_default_stun_summary">Usará %s como assistência quando seu servidor não oferecer um (seu endereço IP será visto pelo servidor STUN durante chamadas)</string>
     <string name="settings_read_receipt_follows_read_marker_summary">Não atualizar seu recibo de leitura ao abrir a sala, mas apenas gradualmente durante a leitura</string>
     <string name="settings_space_pager_prefer_space_1_summary">Priorizar mostrar espaços na barra de espaços inferior que você moveu para o topo da sua lista de espaços raiz</string>
+    <string name="notification_sync_service_failed_title">Não foi possível sincronizar notificações</string>
+    <string name="notification_sync_service_failed_summary">Considere configurar UnifiedPush e desabilitar restrições de bateria para o SchildiChat em suas configurações do sistema.</string>
+    <string name="notification_channel_app_errors">Erros do aplicativo</string>
+    <string name="notification_foreground_service_failed_summary">Você pode precisar excluir o SchildiChat de restrições de bateria nas suas configurações do sistema.</string>
 </resources>
