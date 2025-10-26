@@ -153,7 +153,7 @@ class VectorSettingsNotificationFragment :
 
         // SC addition
         findPreference<Preference>("SC_SETTINGS_PROMPT_UNIFIED_PUSH_TITLE")?.let {
-            it.isVisible = Build.VERSION.SDK_INT > 35 && buildMeta.flavorDescription == "FDroid"
+            it.isVisible = Build.VERSION.SDK_INT >= 35 && buildMeta.flavorDescription == "FDroid"
             it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 startActivity(Intent(Intent.ACTION_VIEW, "https://unifiedpush.org/".toUri()))
                 true

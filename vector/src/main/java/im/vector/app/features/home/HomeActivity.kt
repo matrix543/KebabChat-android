@@ -446,7 +446,7 @@ class HomeActivity :
                 // Android 15 is very strict with background sync service usage and likes to shoot us when we take too long, making the app crash.
                 // Complain first time when starting the app after initial sync is done
                 if (status !is SyncRequestState.InitialSyncRequestState) {
-                    if (!hasComplainedAboutBackgroundSync && Build.VERSION.SDK_INT > 35 && buildMeta.flavorDescription == "FDroid" && vectorPreferences.isBackgroundSyncEnabled()) {
+                    if (!hasComplainedAboutBackgroundSync && Build.VERSION.SDK_INT >= 35 && buildMeta.flavorDescription == "FDroid" && vectorPreferences.isBackgroundSyncEnabled()) {
                         hasComplainedAboutBackgroundSync = true
                         promptNeedsPushEvent()
                     }
