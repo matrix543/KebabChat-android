@@ -23,11 +23,11 @@ class UnregisterUnifiedPushUseCase @Inject constructor(
 ) {
 
     suspend fun execute(pushersManager: PushersManager?) {
-        val mode = BackgroundSyncMode.FDROID_BACKGROUND_SYNC_MODE_FOR_REALTIME
-        vectorPreferences.setFdroidSyncBackgroundMode(mode)
         try {
             unifiedPushHelper.getEndpointOrToken()?.let {
                 Timber.d("Removing $it")
+                val mode = BackgroundSyncMode.FDROID_BACKGROUND_SYNC_MODE_FOR_REALTIME
+                vectorPreferences.setFdroidSyncBackgroundMode(mode)
                 pushersManager?.unregisterPusher(it)
             }
         } catch (e: Exception) {
