@@ -600,7 +600,7 @@ class HomeActivity :
     override fun onResume() {
         super.onResume()
 
-        if (vectorUncaughtExceptionHandler.didAppCrash()) {
+        if (vectorUncaughtExceptionHandler.didAppCrash() && false) {
             vectorUncaughtExceptionHandler.clearAppCrashStatus()
 
             MaterialAlertDialogBuilder(this)
