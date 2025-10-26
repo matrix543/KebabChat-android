@@ -11,6 +11,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.Menu
@@ -38,10 +39,8 @@ import im.vector.app.core.extensions.validateBackPressed
 import im.vector.app.core.platform.VectorBaseActivity
 import im.vector.app.core.platform.VectorMenuProvider
 import im.vector.app.core.pushers.UnifiedPushHelper
-import im.vector.app.core.resources.ColorProvider
 import im.vector.app.core.utils.registerForPermissionsResult
 import im.vector.app.core.utils.startSharePlainTextIntent
-import im.vector.app.core.utils.toast
 import im.vector.app.databinding.ActivityHomeBinding
 import im.vector.app.features.MainActivity
 import im.vector.app.features.MainActivityArgs
@@ -62,6 +61,9 @@ import im.vector.app.features.permalink.NavigationInterceptor
 import im.vector.app.features.permalink.PermalinkHandler
 import im.vector.app.features.permalink.PermalinkHandler.Companion.MATRIX_TO_CUSTOM_SCHEME_URL_BASE
 import im.vector.app.features.permalink.PermalinkHandler.Companion.ROOM_LINK_PREFIX
+import im.vector.app.features.permalink.PermalinkHandler.Companion.SC_MATRIX_TO_CUSTOM_SCHEME_URL_BASE
+import im.vector.app.features.permalink.PermalinkHandler.Companion.SC_ROOM_LINK_PREFIX
+import im.vector.app.features.permalink.PermalinkHandler.Companion.SC_USER_LINK_PREFIX
 import im.vector.app.features.permalink.PermalinkHandler.Companion.USER_LINK_PREFIX
 import im.vector.app.features.popup.DefaultVectorAlert
 import im.vector.app.features.popup.PopupAlertManager
@@ -78,9 +80,6 @@ import im.vector.app.features.spaces.share.ShareSpaceBottomSheet
 import im.vector.app.features.themes.ThemeUtils
 import im.vector.app.features.usercode.UserCodeActivity
 import im.vector.app.features.workers.signout.ServerBackupStatusViewModel
-import im.vector.app.features.permalink.PermalinkHandler.Companion.SC_MATRIX_TO_CUSTOM_SCHEME_URL_BASE
-import im.vector.app.features.permalink.PermalinkHandler.Companion.SC_ROOM_LINK_PREFIX
-import im.vector.app.features.permalink.PermalinkHandler.Companion.SC_USER_LINK_PREFIX
 import im.vector.lib.core.utils.compat.getParcelableExtraCompat
 import im.vector.lib.strings.CommonStrings
 import kotlinx.coroutines.Dispatchers
@@ -139,6 +138,7 @@ class HomeActivity :
     @Inject lateinit var notificationPermissionManager: NotificationPermissionManager
 
     private var isNewAppLayoutEnabled: Boolean = false // delete once old app layout is removed
+    private var hasComplainedAboutBackgroundSync = false
 
     private val createSpaceResultLauncher = registerStartForActivityResult { activityResult ->
         if (activityResult.resultCode == Activity.RESULT_OK) {
@@ -442,6 +442,15 @@ class HomeActivity :
             else -> {
                 // Idle or Incremental sync status
                 views.waitingView.root.isVisible = false
+
+                // Android 15 is very strict with background sync service usage and likes to shoot us when we take too long, making the app crash.
+                // Complain first time when starting the app after initial sync is done
+                if (status !is SyncRequestState.InitialSyncRequestState) {
+                    if (!hasComplainedAboutBackgroundSync && Build.VERSION.SDK_INT > 35 && buildMeta.flavorDescription == "FDroid" && vectorPreferences.isBackgroundSyncEnabled()) {
+                        hasComplainedAboutBackgroundSync = true
+                        promptNeedsPushEvent()
+                    }
+                }
             }
         }
     }
@@ -568,6 +577,25 @@ class HomeActivity :
                     contentAction = Runnable {
                         (weakCurrentActivity?.get() as? VectorBaseActivity<*>)?.let {
                             action(it)
+                        }
+                    }
+                    dismissedAction = Runnable {}
+                }
+        )
+    }
+
+    private fun promptNeedsPushEvent() {
+        popupAlertManager.postVectorAlert(
+                DefaultVectorAlert(
+                        uid = PopupAlertManager.SC_REQUIRES_PUSH_UID,
+                        title = getString(im.vector.lib.strings.R.string.prompt_unified_push_title),
+                        description = getString(im.vector.lib.strings.R.string.prompt_unified_push_description),
+                        iconId = null,
+                ).apply {
+                    colorInt = ThemeUtils.getColor(this@HomeActivity, com.google.android.material.R.attr.colorPrimary)
+                    contentAction = Runnable {
+                        (weakCurrentActivity?.get() as? VectorBaseActivity<*>)?.let {
+                            it.navigator.openSettings(it, VectorSettingsActivity.EXTRA_DIRECT_ACCESS_NOTIFICATIONS)
                         }
                     }
                     dismissedAction = Runnable {}

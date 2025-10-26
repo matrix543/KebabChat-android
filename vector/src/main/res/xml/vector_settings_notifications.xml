@@ -2,6 +2,11 @@
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <Preference
+        android:key="SC_SETTINGS_PROMPT_UNIFIED_PUSH_TITLE"
+        android:title="@string/recommend_unified_push_title"
+        android:summary="@string/recommend_unified_push_description" />
+
     <im.vector.app.core.preference.VectorPreferenceCategory android:title="@string/settings_notifications">
 
         <im.vector.app.core.preference.VectorSwitchPreference

@@ -247,4 +247,9 @@
     <string name="notification_foreground_service_failed_title">Failed to start foreground service</string>
     <string name="notification_foreground_service_failed_summary">You may need to exempt SchildiChat from battery restrictions in your system settings.</string>
 
+    <string name="prompt_unified_push_title">Background sync is enabled</string>
+    <string name="prompt_unified_push_description">You\'re using the background sync service to receive notifications. This approach does not work reliably and causes crashes on recent Android versions. Please consider setting up UnifiedPush instead.</string>
+    <string name="recommend_unified_push_title">UnifiedPush recommended</string>
+    <string name="recommend_unified_push_description">Background sync service does not work reliably and causes crashes on recent Android versions. Please use UnifiedPush or install a SchildiChat variant that supports FCM if you have Google Play Services installed.</string>
+
 </resources>

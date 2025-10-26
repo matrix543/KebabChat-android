@@ -12,11 +12,13 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.lifecycleScope
@@ -36,6 +38,7 @@ import im.vector.app.core.pushers.EnsureFcmTokenIsRetrievedUseCase
 import im.vector.app.core.pushers.FcmHelper
 import im.vector.app.core.pushers.PushersManager
 import im.vector.app.core.pushers.UnifiedPushHelper
+import im.vector.app.core.resources.BuildMeta
 import im.vector.app.core.services.GuardServiceStarter
 import im.vector.app.core.utils.combineLatest
 import im.vector.app.core.utils.isIgnoringBatteryOptimizations
@@ -79,6 +82,7 @@ class VectorSettingsNotificationFragment :
     @Inject lateinit var vectorFeatures: VectorFeatures
     @Inject lateinit var notificationPermissionManager: NotificationPermissionManager
     @Inject lateinit var ensureFcmTokenIsRetrievedUseCase: EnsureFcmTokenIsRetrievedUseCase
+    @Inject lateinit var buildMeta: BuildMeta
 
     override var titleRes: Int = CommonStrings.settings_notifications
     override val preferenceXmlRes = R.xml.vector_settings_notifications
@@ -148,6 +152,14 @@ class VectorSettingsNotificationFragment :
                 }
 
         // SC addition
+        findPreference<Preference>("SC_SETTINGS_PROMPT_UNIFIED_PUSH_TITLE")?.let {
+            it.isVisible = Build.VERSION.SDK_INT > 35 && buildMeta.flavorDescription == "FDroid"
+            it.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, "https://unifiedpush.org/".toUri()))
+                true
+
+            }
+        }
         findPreference<SwitchPreference>(VectorPreferences.SETTINGS_FORCE_ALLOW_BACKGROUND_SYNC)?.let {
             it.setTransactionalSwitchChangeListener(lifecycleScope) { isChecked ->
                 if (isChecked) {
