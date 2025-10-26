@@ -183,4 +183,9 @@
     <string name="settings_integrations_scalar_warning">⚠️ Toto nastavení ve výchozím stavu (pokud není přepsáno v konfiguraci vašeho domovského serveru) umožňuje přístup ke \"scalaru\", integračnímu manažeru Elementu, který je bohužel proprietární, tj. jeho zdrojový kód není otevřený a nemůže být kontrolován veřejností ani vývojáři SchildiChatu.</string>
     <string name="settings_space_pager_prefer_space_1_summary">Upřednostnit zobrazení prostorů ve spodním pruhu, které jste přesunuli na začátek seznamu kořenových prostorů</string>
     <string name="settings_space_pager_prefer_space_1">Upřednostnit spodní kořenový prostor</string>
+    <string name="notification_channel_app_errors">Chyby aplikace</string>
+    <string name="notification_sync_service_failed_title">Nelze synchronizovat oznámení</string>
+    <string name="notification_sync_service_failed_summary">Zvažte nastavení UnifiedPush a deaktivaci omezení baterie pro SchildiChat v nastavení systému.</string>
+    <string name="notification_foreground_service_failed_title">Nepodařilo se spustit službu na popředí</string>
+    <string name="notification_foreground_service_failed_summary">Možná budete muset v nastavení systému povolit aplikaci SchildiChat, aby nebyla omezena spotřeba baterie.</string>
 </resources>
