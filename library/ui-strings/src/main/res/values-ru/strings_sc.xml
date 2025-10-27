@@ -182,4 +182,13 @@
     <string name="settings_integrations_scalar_warning">⚠️ Эта настройка по умолчанию (если не изменена конфигурацией Вашего домашнего сервера) включает доступ к \"Scalar\", менеджеру интеграций от Element. К сожалению, он является проприетарным, т.е. его исходый код не открытый и не может быть проверен пользователями или разработчиками SchildiChat.</string>
     <string name="settings_space_pager_prefer_space_1">Предпочитать нижнее корневое пространство</string>
     <string name="settings_space_pager_prefer_space_1_summary">Установите приоритет отображения пробелов в нижней строке пробела, которую вы переместили в начало списка корневых пробелов</string>
+    <string name="notification_channel_app_errors">Ошибки приложения</string>
+    <string name="notification_sync_service_failed_title">Невозможно синхронизировать уведомления</string>
+    <string name="notification_sync_service_failed_summary">Рассмотрите возможность настройки UnifiedPush и отключения ограничений по заряду батареи для SchildiChat в настройках вашей системы.</string>
+    <string name="notification_foreground_service_failed_title">Не удалось запустить службу переднего плана</string>
+    <string name="notification_foreground_service_failed_summary">Возможно, вам потребуется освободить SchildiChat от ограничений по заряду батареи в настройках вашей системы.</string>
+    <string name="prompt_unified_push_title">Включена фоновая синхронизация</string>
+    <string name="prompt_unified_push_description">Вы используете службу фоновой синхронизации для получения уведомлений. Этот подход работает ненадежно и приводит к сбоям в последних версиях Android. Пожалуйста, подумайте о том, чтобы вместо этого настроить UnifiedPush.</string>
+    <string name="recommend_unified_push_title">Рекомендуется использовать UnifiedPush</string>
+    <string name="recommend_unified_push_description">Служба фоновой синхронизации работает ненадежно и приводит к сбоям в последних версиях Android. Пожалуйста, используйте UnifiedPush или установите версию SchildiChat, поддерживающую FCM, если у вас установлены сервисы Google Play.</string>
 </resources>
