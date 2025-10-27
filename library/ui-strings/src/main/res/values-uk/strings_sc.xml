@@ -180,4 +180,13 @@
     <string name="freeform_reaction_summary">Реакція довільної форми</string>
     <string name="settings_initial_sync">Початкова синхронізація</string>
     <string name="app_desktop_web_sc">${app_name_sc_stable} Web\n${app_name_sc_stable} Desktop</string>
+    <string name="notification_channel_app_errors">Помилки застосунку</string>
+    <string name="notification_sync_service_failed_title">Неможливо синхронізувати сповіщення</string>
+    <string name="notification_sync_service_failed_summary">Подумайте про те, щоб налаштувати Unified Push і вимкнути обмеження заряду батареї для SchildiChat у налаштуваннях вашої системи.</string>
+    <string name="notification_foreground_service_failed_title">Не вдалося запустити службу переднього плану</string>
+    <string name="notification_foreground_service_failed_summary">Можливо, вам необхідно звільнити SchildiChat від обмежень заряду акумулятора в налаштуваннях системи.</string>
+    <string name="prompt_unified_push_title">Фонову синхронізацію увімкнено</string>
+    <string name="prompt_unified_push_description">Ви використовуєте службу фонової синхронізації для отримання сповіщень. Такий підхід працює ненадійно і призводить до збоїв на останніх версіях Android. Будь ласка, розгляньте можливість налаштування Unified Push замість цього.</string>
+    <string name="recommend_unified_push_title">Рекомендовано Unified Push</string>
+    <string name="recommend_unified_push_description">Служба фонової синхронізації працює ненадійно і спричиняє збої на останніх версіях Android. Будь ласка, використовуйте Unified Push або встановіть версію Schildi Chat з підтримкою FCM, якщо у вас встановлені Google Play Services.</string>
 </resources>
