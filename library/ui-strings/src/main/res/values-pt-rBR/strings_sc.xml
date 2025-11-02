@@ -181,4 +181,6 @@
     <string name="notification_channel_app_errors">Erros do aplicativo</string>
     <string name="notification_foreground_service_failed_summary">Você pode precisar excluir o SchildiChat de restrições de bateria nas suas configurações do sistema.</string>
     <string name="notification_foreground_service_failed_title">Falha ao iniciar serviço em primeiro plano</string>
+    <string name="prompt_unified_push_title">Sincronização em plano de fundo está habilitada</string>
+    <string name="recommend_unified_push_title">UnifiedPush recomendado</string>
 </resources>
