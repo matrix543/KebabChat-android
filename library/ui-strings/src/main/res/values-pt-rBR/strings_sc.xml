@@ -183,4 +183,5 @@
     <string name="notification_foreground_service_failed_title">Falha ao iniciar serviço em primeiro plano</string>
     <string name="prompt_unified_push_title">Sincronização em plano de fundo está habilitada</string>
     <string name="recommend_unified_push_title">UnifiedPush recomendado</string>
+    <string name="prompt_unified_push_description">Você está usando o serviço de sincronização em segundo plano para receber notificações. Esta abordagem não funciona confiavelmente e causa travas em versões recente do Android. Em vez disso, por favor considere configurar UnifiedPush.</string>
 </resources>
