@@ -1280,7 +1280,6 @@ class VectorPreferences @Inject constructor(
                 .putBoolean(SETTINGS_LABS_ALLOW_MARK_UNREAD, true)
                 //.putBoolean(SETTINGS_LABS_ENABLE_SWIPE_TO_REPLY, false)
                 .putBoolean(SETTINGS_VOICE_MESSAGE, false)
-                .putBoolean(SETTINGS_USE_RAGE_SHAKE_KEY, true)
                 .putBoolean(SETTINGS_AGGREGATE_UNREAD_COUNTS, false)
                 .putBoolean(SETTINGS_ENABLE_SPACE_PAGER, true)
                 .putBoolean(SETTINGS_READ_RECEIPT_FOLLOWS_READ_MARKER, true)

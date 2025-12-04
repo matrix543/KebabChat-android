@@ -175,8 +175,6 @@
     <string name="notice_power_level_diff">%1$s no %2$s uz %3$s</string>
     <string name="notice_power_level_changed">%1$s nomainīja %2$s pieejas līmeni.</string>
     <string name="notice_power_level_changed_by_you">Tu nomainīji %1$s pieejas līmeni.</string>
-    <string name="power_level_custom_no_value">Pielāgots</string>
-    <string name="power_level_custom">Pielāgots (%1$d)</string>
     <string name="power_level_default">Noklusējuma</string>
     <string name="power_level_moderator">Moderators</string>
     <string name="power_level_admin">Administrators</string>
@@ -783,11 +781,9 @@ Nākotnē šī pārbaudes procedūra plānota sarežģītāka.</string>
     <string name="action_download">Lejupielādēt</string>
     <string name="are_you_sure">Vai tiešām to vēlaties\?</string>
     <string name="system_theme">Sistēmas noklusējuma</string>
-    <string name="room_member_power_level_custom_in">Pielāgots (%1$d) iekš %2$s</string>
     <string name="room_member_power_level_default_in">%1$s noklusējums</string>
     <string name="room_member_power_level_moderator_in">%1$s moderators</string>
     <string name="room_member_power_level_admin_in">%1$s administrators</string>
-    <string name="room_member_power_level_custom">Pielāgots</string>
     <string name="room_member_power_level_moderators">Moderators</string>
     <string name="room_member_power_level_admins">Administrators</string>
     <string name="encryption_information_unknown_ip">nepazīstama ip</string>
@@ -1078,7 +1074,7 @@ Nākotnē šī pārbaudes procedūra plānota sarežģītāka.</string>
 \nVai pieteikties tīmekļa klientā\?</string>
     <string name="login_sso_error_message">Radās kļūda, ielādējot lapu: %1$s (%2$d)</string>
     <string name="login_server_url_form_common_notice">Ievadiet servera adresi, kuru vēlaties izmantot</string>
-    <string name="login_server_url_form_modular_notice">Ievadiet Modular KebabChat vai servera adresi, kuru vēlaties izmantot</string>
+    <string name="login_server_url_form_modular_notice">Ievadiet Modular SchildiChat vai servera adresi, kuru vēlaties izmantot</string>
     <string name="login_server_url_form_modular_text">Premium hostings organizācijām</string>
     <string name="login_server_url_form_other_hint">Adrese</string>
     <string name="login_server_url_form_modular_hint">Element Matrix Services adrese</string>
@@ -2159,7 +2155,7 @@ Nākotnē šī pārbaudes procedūra plānota sarežģītāka.</string>
 \n
 \nTas nodrošina viņiem pārliecību, ka viņi tiešām runā ar Tevi, bet tas arī nozīmē, ka viņi var redzēt šeit ievadītās sesijas nosaukumu.</string>
     <string name="threads_notice_migration_title">Pavedieni tuvojas Beta 🎉</string>
-    <string name="labs_enable_new_app_layout_summary">Vienkāršots KebabChat ar cilnēm pēc izvēles</string>
+    <string name="labs_enable_new_app_layout_summary">Vienkāršots SchildiChat ar cilnēm pēc izvēles</string>
     <string name="labs_enable_deferred_dm_title">Iespējot atliktās tiešās ziņas</string>
     <string name="space_list_empty_message">Vietas ir jauns veids, kā apkopot istabas un cilvēkus. Jāizveido vieta, lai sāktu.</string>
     <string name="room_unsupported_e2e_algorithm">Šifrēšanas konfigurācijā ir kļūmes, tādēļ nevar nosūtīt ziņas. Lūgums sazināties ar pārvaldītāju, lai atjaunotu šifrēšanu derīgā stāvoklī.</string>
@@ -2915,7 +2911,7 @@ Nākotnē šī pārbaudes procedūra plānota sarežģītāka.</string>
         <item quantity="one">Jāapsver atteikšanās no vecajām sesijām (%1$d diena vai vairāk), kas vairs netiek izmantotas.</item>
         <item quantity="other">Jāapsver atteikšanās no vecajām sesijām (%1$d dienas vai vairāk), kas vairs netiek izmantotas.</item>
     </plurals>
-    <string name="labs_enable_element_call_permission_shortcuts">Iespējot KebabChat zvanu atļauju īsceļus</string>
+    <string name="labs_enable_element_call_permission_shortcuts">Iespējot SchildiChat zvanu atļauju īsceļus</string>
     <string name="device_manager_session_last_activity">Pēdējā darbība %1$s</string>
     <string name="device_manager_sessions_other_description">Vislielākajai drošībai jāapliecina savas sesijas un jāatsakās no jebkuras neatpazītas vai neizmantotas sesijas.</string>
     <string name="device_manager_filter_option_unverified">Neapliecinātas</string>
@@ -3034,4 +3030,3 @@ Nākotnē šī pārbaudes procedūra plānota sarežģītāka.</string>
 \n
 \nJa nevēlies vairs redzēt saturu no šī lietotāja, to var neņemt vērā, lai paslēptu ziņas.</string>
 </resources>
-
